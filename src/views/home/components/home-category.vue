@@ -2,7 +2,7 @@
 import { useCategoryStore } from  "@/stores/category"
 import {computed, reactive, ref} from "vue";
 import { findBrand } from "@/api/home"
-import { IMenuCategory } from "@/types/menuCategory"
+import type { IMenuCategory } from "@/types/menuCategory"
 import XghSkeleton from "@/baseUI/xgh-skeleton.vue";
 // 分类数据 = 9个分类+1个品牌
 const categoryStore = useCategoryStore();
@@ -36,7 +36,7 @@ findBrand().then((res: any) => {
 </script>
 
 <template>
-  <div class='home-category' @mouseleave="categoryId = null">
+  <div class='home-category' @mouseleave="categoryId = undefined">
     <ul class="menu">
       <li v-for="menu in menuList" :key="menu.id" @mouseenter="categoryId = menu.id" :class="{active: categoryId === menu.id}">
         <RouterLink :to="`category/${menu.id}`">{{ menu.name }}</RouterLink>

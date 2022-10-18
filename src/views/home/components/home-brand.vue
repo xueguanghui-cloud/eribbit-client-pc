@@ -2,7 +2,7 @@
 import HomePanel from "./home-panel.vue"
 import {ref} from "vue";
 import {findBrand} from "@/api/home";
-import { IBrand } from "@/types/home/home-brand"
+import type { IBrand } from "@/types/home/home-brand"
 import XghSkeleton from "@/baseUI/xgh-skeleton.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 

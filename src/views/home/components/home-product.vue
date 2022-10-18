@@ -5,7 +5,7 @@ import HomeGoods from "./home-goods.vue"
 import {useIntersectionObserver} from "@vueuse/core";
 import HomePanel from "./home-panel.vue";
 import XghMore from "@/baseUI/xgh-more.vue";
-import { IHomeProduct } from "@/types/home/home-product"
+import type { IHomeProduct } from "@/types/home/home-product"
 const target = ref();
 const products = ref<IHomeProduct[]>([]);
 

@@ -1,19 +1,27 @@
 <script setup lang="ts">
 import { defineProps, withDefaults } from "vue"
-import { IGood } from "@/types/home/home-good"
+import type { IGood } from "@/types/home/home-good"
 
 type TGood = {
-  good: IGood | {}
+  good: IGood
 }
 
 withDefaults(defineProps<TGood>(),{
-  good: () => ({})
+  good: () => ({
+    id:"",
+    name: "",
+    orderNum: "",
+    desc: "",
+    discount: "",
+    picture: "",
+    price: "",
+  })
 })
 </script>
 
 <template>
   <div class="goods-item">
-    <RouterLink :to="`/product/${good.id}`" class="image">
+    <RouterLink :to="`/product/${good?.id}`" class="image">
       <img :src="good.picture" :alt="good.name" />
     </RouterLink>
     <p class="name ellipsis-2">{{ good.name }}</p>

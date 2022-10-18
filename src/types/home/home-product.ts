@@ -12,7 +12,7 @@ interface IHomeProduct {
     name: string;
     picture: string;
     saleInfo: string;
-    goods: IGood;
+    goods: IGood[];
     children: IHomeProductChild[];
 }
 

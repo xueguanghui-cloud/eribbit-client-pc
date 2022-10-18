@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<TSlider>(), {
 const shouSliderIndex = ref(0);
 
 // 自动轮播图的逻辑
-let timer: number;
+let timer: any;
 const autoPlayFun =()=>{
   // 防止定时器重复叠加
   timer && clearInterval(timer);

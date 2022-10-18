@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { findBanner } from "@/api/home"
-import { ISlider } from "@/types/sliders"
+import type { ISlider } from "@/types/sliders"
 const sliders = ref<ISlider[]>([]);
 findBanner().then((res: any)=>{
   sliders.value = res.result;
