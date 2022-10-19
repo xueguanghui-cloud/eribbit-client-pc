@@ -29,7 +29,7 @@ const hide = (id: string) => {
         <ul>
           <li v-for="child in item.children" :key="child.id">
             <router-link :to="'/category/sub/' + child.id" @click="hide(item.id)">
-              <img :src="child.picture" :alt="child.name">
+              <img v-lazy="child.picture" :alt="child.name">
               <p>{{ child.name }}</p>
             </router-link>
           </li>

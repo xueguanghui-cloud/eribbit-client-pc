@@ -56,7 +56,7 @@ findBrand().then((res: any) => {
       <ul v-if="currCategory && currCategory.goods">
         <li v-for="good in currCategory.goods" :key="good.id">
           <RouterLink :to="`/category/`">
-            <img :src="good.picture" :alt="good.name">
+            <img v-lazy="good.picture" :alt="good.name">
             <div class="info">
               <p class="name ellipsis-2">{{ good.name }}</p>
               <p class="desc ellipsis">{{ good.desc }}</p>
@@ -69,7 +69,7 @@ findBrand().then((res: any) => {
       <ul v-if="currCategory && currCategory.brands">
         <li class="brand" v-for="brand in currCategory.brands" :key="brand.id">
           <RouterLink to="/">
-            <img :src="brand.picture" :alt="brand.name">
+            <img v-lazy="brand.picture" :alt="brand.name">
             <div class="info">
               <p class="place"><i class="iconfont icon-dingwei"></i>{{ brand.place }}</p>
               <p class="name ellipsis">{{ brand.name }}</p>

@@ -49,7 +49,7 @@ const toggle = (step: number) => {
           <ul v-if="brands.length" class="list" :style="{transform:`translateX(${-index*1240}px)`}">
             <li v-for="brand in brands" :key="brand.id">
               <RouterLink to="/">
-                <img :src="brand.picture" :alt="brand.name">
+                <img v-lazy="brand.picture" :alt="brand.name">
               </RouterLink>
             </li>
           </ul>

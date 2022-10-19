@@ -75,7 +75,7 @@ onUnmounted(()=>{
       <li class="carousel-item" v-for="(slider, index) in sliders" :key="slider.id" :class="{ 'fade': shouSliderIndex === index }">
         <RouterLink :to="slider.hrefUrl">
           <img
-            :src="slider.imgUrl"
+             v-lazy="slider.imgUrl"
             :alt="slider.imgUrl"
           />
         </RouterLink>

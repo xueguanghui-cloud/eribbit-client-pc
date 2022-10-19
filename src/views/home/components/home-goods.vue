@@ -22,7 +22,7 @@ withDefaults(defineProps<TGood>(),{
 <template>
   <div class="goods-item">
     <RouterLink :to="`/product/${good?.id}`" class="image">
-      <img :src="good.picture" :alt="good.name" />
+      <img v-lazy="good.picture" :alt="good.name" />
     </RouterLink>
     <p class="name ellipsis-2">{{ good.name }}</p>
     <p class="desc ellipsis">{{ good.desc }}</p>

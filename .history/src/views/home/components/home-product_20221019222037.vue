@@ -12,7 +12,7 @@ const products = ref<IHomeProduct[]>([]);
 // 使用数据懒加载方式加载数据
 const { stop } = useIntersectionObserver(
   target,
-  ([{ isIntersecting }]) => {
+  ([{ isIntersecting }], observerElement) => {
     if (isIntersecting) {
       stop();
       // 调用API函数获取数据

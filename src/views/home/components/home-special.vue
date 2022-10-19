@@ -31,7 +31,7 @@ const { stop } = useIntersectionObserver(
     <div class="special-list" ref="homeSpecial">
       <div class="special-item" v-for="special in specials" :key="special.id">
         <RouterLink :to="`/special/${special.id}`">
-          <img :src="special.cover" :alt="special.title" />
+          <img v-lazy="special.cover" :alt="special.title" />
           <div class="meta">
             <p class="title">
               <span class="top ellipsis">{{ special.title }}</span>
