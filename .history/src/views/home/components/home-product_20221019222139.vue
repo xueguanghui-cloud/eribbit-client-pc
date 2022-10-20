@@ -77,7 +77,7 @@ const { stop } = useIntersectionObserver(
       font-size: 16px;
       border-radius: 4px;
       &:hover {
-        background: $xtxColor;
+        background: $xghColor;
         color: #fff;
       }
       &:last-child {

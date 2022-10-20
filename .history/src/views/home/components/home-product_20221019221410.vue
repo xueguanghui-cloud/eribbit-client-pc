@@ -1,46 +1,55 @@
 <script setup lang="ts">
-import {ref} from "vue";
-import {findProduct} from "@/api/home";
-import HomeGoods from "./home-goods.vue"
-import {useIntersectionObserver} from "@vueuse/core";
+import { ref } from "vue";
+import { findProduct } from "@/api/home";
+import HomeGoods from "./home-goods.vue";
+import { useIntersectionObserver } from "@vueuse/core";
 import HomePanel from "./home-panel.vue";
 import XghMore from "@/baseUI/xgh-more.vue";
-import type { IHomeProduct } from "@/types/home/home-product"
+import type { IHomeProduct } from "@/types/home/home-product";
 const target = ref();
 const products = ref<IHomeProduct[]>([]);
 
 // 使用数据懒加载方式加载数据
-const { stop } = useIntersectionObserver(target,([{ isIntersecting }], observerElement) => {
-      if(isIntersecting){
-        stop()
-        // 调用API函数获取数据
-        findProduct().then((res: any) => {
-          products.value = res.result;
-        })
-      }
-    },
-    {
-      // 相交比列大于0，就触犯回调
-      threshold: 0
+const { stop } = useIntersectionObserver(
+  target,
+  ([{ isIntersecting }], observerElement) => {
+    if (isIntersecting) {
+      stop();
+      // 调用API函数获取数据
+      findProduct().then((res: any) => {
+        products.value = res.result;
+      });
     }
-)
-
-
+  },
+  {
+    // 相交比列大于0，就触犯回调
+    threshold: 0,
+  }
+);
 </script>
 
 <template>
   <div class="home-product">
     <div class="container" ref="target">
-      <home-panel :title="product.name" v-for="product in products" :key="product.id">
+      <home-panel
+        :title="product.name"
+        v-for="product in products"
+        :key="product.id"
+      >
         <template #right>
           <div class="sub">
-            <RouterLink v-for="sub in product.children" :key="sub.id" :to="`/category/sub/${sub.id}`">{{ sub.name }}</RouterLink>
+            <RouterLink
+              v-for="sub in product.children"
+              :key="sub.id"
+              :to="`/category/sub/${sub.id}`"
+              >{{ sub.name }}</RouterLink
+            >
           </div>
           <xgh-more :path="`/category/${product.id}`" />
         </template>
         <div class="box">
           <RouterLink class="cover" :to="`/category/${product.id}`">
-            <img :alt="product.name" v-lazy="product.picture">
+            <img :alt="product.name" v-lazy="product.picture" />
             <strong class="label">
               <span>{{ product.name }}馆</span>
               <span>{{ product.saleInfo }}</span>
@@ -68,7 +77,7 @@ const { stop } = useIntersectionObserver(target,([{ isIntersecting }], observerE
       font-size: 16px;
       border-radius: 4px;
       &:hover {
-        background: $xtxColor;
+        background: $xghColor;
         color: #fff;
       }
       &:last-child {
@@ -99,16 +108,16 @@ const { stop } = useIntersectionObserver(target,([{ isIntersecting }], observerE
         position: absolute;
         left: 0;
         top: 50%;
-        transform: translate3d(0,-50%,0);
+        transform: translate3d(0, -50%, 0);
         span {
           text-align: center;
           &:first-child {
             width: 76px;
-            background: rgba(0,0,0,.9);
+            background: rgba(0, 0, 0, 0.9);
           }
           &:last-child {
             flex: 1;
-            background: rgba(0,0,0,.7);
+            background: rgba(0, 0, 0, 0.7);
           }
         }
       }
@@ -122,7 +131,7 @@ const { stop } = useIntersectionObserver(target,([{ isIntersecting }], observerE
         height: 300px;
         margin-right: 10px;
         margin-bottom: 10px;
-        &:nth-last-child(-n+4) {
+        &:nth-last-child(-n + 4) {
           margin-bottom: 0;
         }
         &:nth-child(4n) {
