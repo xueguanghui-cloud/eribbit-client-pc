@@ -32,8 +32,6 @@ import type { App } from "vue";
 const importFn: any = import.meta.globEager("./*.vue");
 export default {
   install(app: App) {
-    // 在app上进行扩展。app 提供 component directive 函数
-    // 如果要挂载原型 app.config.globalProperties 方式
     for (const key in importFn) {
       const component = importFn[key];
       const name = key.replace("./", "").replace(".vue", "");

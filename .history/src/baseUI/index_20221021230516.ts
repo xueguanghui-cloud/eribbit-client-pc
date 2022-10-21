@@ -5,26 +5,26 @@
 // vue3.0插件写法要素：导出一个对象，有install函数，默认传入了app应用实例,app基础之上扩展
 import type { App } from "vue";
 /*
-    import XghSkeleton from "./xgh-skeleton.vue";
-    import XghCarousel from "./xgh-carousel.vue";
-    import XghMore from "./xgh-more.vue";
-    import XghBread from "./xgh-bread.vue";
-    import XghBreadItem from "./xgh-bread-item.vue";
-    import defaultImg from "@/assets/image/200.png";
+import XghSkeleton from "./xgh-skeleton.vue";
+import XghCarousel from "./xgh-carousel.vue";
+import XghMore from "./xgh-more.vue";
+import XghBread from "./xgh-bread.vue";
+import XghBreadItem from "./xgh-bread-item.vue";
+import defaultImg from "@/assets/image/200.png";
 
-    export default {
-    install(app: App) {
-        // 在app上进行扩展。app 提供 component directive 函数
-        // 如果要挂载原型 app.config.globalProperties 方式
-        app.component("xgh-skeleton", XghSkeleton);
-        app.component("xgh-carousel", XghCarousel);
-        app.component("xgh-more", XghMore);
-        app.component("xgh-bread", XghBread);
-        app.component("xgh-bread-item", XghBreadItem);
-        // 定义指令
-        defineDirective(app);
-    },
-    };
+export default {
+  install(app: App) {
+    // 在app上进行扩展。app 提供 component directive 函数
+    // 如果要挂载原型 app.config.globalProperties 方式
+    app.component("xgh-skeleton", XghSkeleton);
+    app.component("xgh-carousel", XghCarousel);
+    app.component("xgh-more", XghMore);
+    app.component("xgh-bread", XghBread);
+    app.component("xgh-bread-item", XghBreadItem);
+    // 定义指令
+    defineDirective(app);
+  },
+};
 */
 
 // 上面的逐个导入及注册很麻烦,改为批量导入
@@ -34,6 +34,11 @@ export default {
   install(app: App) {
     // 在app上进行扩展。app 提供 component directive 函数
     // 如果要挂载原型 app.config.globalProperties 方式
+    // app.component("xgh-skeleton", XghSkeleton);
+    // app.component("xgh-carousel", XghCarousel);
+    // app.component("xgh-more", XghMore);
+    // app.component("xgh-bread", XghBread);
+    // app.component("xgh-bread-item", XghBreadItem);
     for (const key in importFn) {
       const component = importFn[key];
       const name = key.replace("./", "").replace(".vue", "");

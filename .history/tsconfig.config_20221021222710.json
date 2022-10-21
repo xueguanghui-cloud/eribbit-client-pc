@@ -1,0 +1,17 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "include": ["vite.config.*", "vitest.config.*", "cypress.config.*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist/",
+    "declaration": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "types": [
+      "node",
+      "webpack-env"
+    ]
+    
+  }
+}

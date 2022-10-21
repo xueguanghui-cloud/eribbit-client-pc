@@ -34,6 +34,11 @@ export default {
   install(app: App) {
     // 在app上进行扩展。app 提供 component directive 函数
     // 如果要挂载原型 app.config.globalProperties 方式
+    // app.component("xgh-skeleton", XghSkeleton);
+    // app.component("xgh-carousel", XghCarousel);
+    // app.component("xgh-more", XghMore);
+    // app.component("xgh-bread", XghBread);
+    // app.component("xgh-bread-item", XghBreadItem);
     for (const key in importFn) {
       const component = importFn[key];
       const name = key.replace("./", "").replace(".vue", "");
