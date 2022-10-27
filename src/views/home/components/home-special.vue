@@ -1,28 +1,26 @@
 <script setup lang="ts">
-import {ref} from "vue";
-import {findSpecial} from "@/api/home"
-import type { IHomeSpecial } from "@/types/home/home-special"
-import {useIntersectionObserver} from "@vueuse/core";
+import { ref } from "vue";
+import { findSpecial } from "@/api/home";
+import type { IHomeSpecial } from "@/types/home/home-special";
+import { useIntersectionObserver } from "@vueuse/core";
 import HomePanel from "@/views/home/components/home-panel.vue";
 
-
-const target = ref()
-const specials = ref<IHomeSpecial[]>([])
+const target = ref();
+const specials = ref<IHomeSpecial[]>([]);
 
 // 使用数据懒加载方式加载数据
 const { stop } = useIntersectionObserver(
-    target, // 监听的目标元素
-    ([{ isIntersecting }], observerElement) => {
-      if(isIntersecting){
-        stop()
-        // 调用API函数获取数据
-        findSpecial().then((res: any) => {
-          specials.value = res.result
-        })
-      }
-    },
-)
-
+  target, // 监听的目标元素
+  ([{ isIntersecting }], observerElement) => {
+    if (isIntersecting) {
+      stop();
+      // 调用API函数获取数据
+      findSpecial().then((res: any) => {
+        specials.value = res.result;
+      });
+    }
+  }
+);
 </script>
 
 <template>
@@ -41,9 +39,15 @@ const { stop } = useIntersectionObserver(
           </div>
         </RouterLink>
         <div class="foot">
-          <span class="like"><i class="iconfont icon-hart1"></i>{{ special.collectNum }}</span>
-          <span class="view"><i class="iconfont icon-see"></i>{{ special.viewNum }}</span>
-          <span class="reply"><i class="iconfont icon-message"></i>{{ special.replyNum }}</span>
+          <span class="like"
+            ><i class="iconfont icon-hart1"></i>{{ special.collectNum }}</span
+          >
+          <span class="view"
+            ><i class="iconfont icon-see"></i>{{ special.viewNum }}</span
+          >
+          <span class="reply"
+            ><i class="iconfont icon-message"></i>{{ special.replyNum }}</span
+          >
         </div>
       </div>
     </div>
@@ -62,7 +66,7 @@ const { stop } = useIntersectionObserver(
   .special-item {
     width: 404px;
     background: #fff;
-     @include hoverShadow();
+    @include hoverShadow();
     a {
       display: block;
       width: 100%;
@@ -74,7 +78,11 @@ const { stop } = useIntersectionObserver(
         object-fit: cover;
       }
       .meta {
-        background-image: linear-gradient(to top,rgba(0, 0, 0, 0.8),transparent 50%);
+        background-image: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8),
+          transparent 50%
+        );
         position: absolute;
         left: 0;
         top: 0;

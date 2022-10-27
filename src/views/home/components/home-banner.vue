@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { findBanner } from "@/api/home"
-import type { ISlider } from "@/types/sliders"
+import { findBanner } from "@/api/home";
+import type { ISlider } from "@/types/sliders";
 const sliders = ref<ISlider[]>([]);
-findBanner().then((res: any)=>{
+findBanner().then((res: any) => {
   sliders.value = res.result;
-})
+});
 </script>
 
 <template>
@@ -23,10 +23,10 @@ findBanner().then((res: any)=>{
   top: 0;
   z-index: 98;
   .xgh-carousel {
-    :deep(.carousel-btn.prev){
+    :deep(.carousel-btn.prev) {
       left: 270px;
     }
-    :deep(.carousel-indicator){
+    :deep(.carousel-indicator) {
       padding-left: 250px;
     }
   }

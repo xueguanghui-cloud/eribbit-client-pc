@@ -1,8 +1,8 @@
-interface IHomeHot{
-    id: string;
-    title: string;
-    alt: string;
-    picture: string;
+interface IHomeHot {
+  id: string;
+  title: string;
+  alt: string;
+  picture: string;
 }
 
-export type { IHomeHot }
+export type { IHomeHot };

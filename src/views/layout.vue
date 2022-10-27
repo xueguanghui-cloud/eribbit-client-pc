@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import {useCategoryStore} from "@/stores/category";
-import AppNavBar from "@/components/app-navbar.vue"
-import AppHeader from  "@/components/app-header.vue"
-import AppFooter from  "@/components/app-footer.vue"
-import AppHeaderSticky from "@/components/app-header-sticky.vue"
-
+import { useCategoryStore } from "@/stores/category";
+import AppNavBar from "@/components/app-navbar.vue";
+import AppHeader from "@/components/app-header.vue";
+import AppFooter from "@/components/app-footer.vue";
+import AppHeaderSticky from "@/components/app-header-sticky.vue";
 
 // 获取分类数据
-const categoryStore = useCategoryStore()
+const categoryStore = useCategoryStore();
 categoryStore.getCategoryList();
 </script>
 
@@ -20,13 +19,10 @@ categoryStore.getCategoryList();
     <RouterView />
   </div>
   <app-footer />
-
 </template>
 
-
-
 <style scoped lang="scss">
-.app-body{
+.app-body {
   min-height: 500px;
 }
 </style>

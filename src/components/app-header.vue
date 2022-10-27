@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import AppHeaderNav from "@/components/app-header-nav.vue"
+import AppHeaderNav from "@/components/app-header-nav.vue";
 </script>
 
 <template>
-  <header class='app-header'>
+  <header class="app-header">
     <div class="container">
       <h1 class="logo"><RouterLink to="/">小兔鲜</RouterLink></h1>
       <AppHeaderNav></AppHeaderNav>
       <div class="search">
         <i class="iconfont icon-search"></i>
-        <input type="text" placeholder="搜一搜">
+        <input type="text" placeholder="搜一搜" />
       </div>
       <div class="cart">
         <a class="curr" href="#">
@@ -61,7 +61,7 @@ import AppHeaderNav from "@/components/app-header-nav.vue"
       text-align: center;
       position: relative;
       display: block;
-      .icon-cart{
+      .icon-cart {
         font-size: 22px;
       }
       em {

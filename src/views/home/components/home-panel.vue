@@ -1,23 +1,24 @@
 <script setup lang="ts">
-import { defineProps } from "vue"
+import { defineProps } from "vue";
 defineProps({
   title: {
     type: String,
-    default: ""
+    default: "",
   },
   subTitle: {
     type: String,
     default: "",
-  }
-})
-
+  },
+});
 </script>
 
 <template>
   <div class="home-panel">
     <div class="container">
       <div class="head">
-        <h3>{{ title }}<small>{{ subTitle }}</small></h3>
+        <h3>
+          {{ title }}<small>{{ subTitle }}</small>
+        </h3>
         <slot name="right" />
       </div>
       <slot />

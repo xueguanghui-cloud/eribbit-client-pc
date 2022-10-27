@@ -11,9 +11,9 @@ export default defineConfig({
       // 全局样式引入
       scss: {
         additionalData: '@import "./src/assets/style/variables.scss";',
-        javascriptEnable: true
-      }
-    }
+        javascriptEnable: true,
+      },
+    },
   },
   resolve: {
     alias: {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 const Layout = () => import("@/views/layout.vue");
-const Home = ()  => import("@/views/home/home.vue");
+const Home = () => import("@/views/home/home.vue");
 const Category = () => import("@/views/category/category.vue");
 const subCategory = () => import("@/views/category/sub.vue");
 
@@ -10,13 +10,13 @@ const router = createRouter({
   routes: [
     // 一级路由
     {
-      path: '/',
+      path: "/",
       component: Layout,
       children: [
-        { path: '/', component: Home },
-        { path: '/category/:id', component: Category },
-        { path: '/category/sub/:id', component: subCategory }
-      ]
+        { path: "/", component: Home },
+        { path: "/category/:id", component: Category },
+        { path: "/category/sub/:id", component: subCategory },
+      ],
     },
   ],
 });
