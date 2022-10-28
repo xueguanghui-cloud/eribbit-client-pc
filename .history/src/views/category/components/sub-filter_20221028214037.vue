@@ -1,0 +1,62 @@
+<script setup lang="ts">
+import { findSubCategoryFilter } from "@/api/category";
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+
+// 监听二级类目id变化获取筛选数据
+const route = useRoute();
+const filterData = ref();
+watch(
+  () => route.params.id,
+  (newValue: string) => {
+    // 变化后的id有值 且 处于二级路由
+    if (newValue && `/category/sub/${newValue}` === route.path) {
+      // 发送请求获取数据
+      findSubCategoryFilter(route.params.id).then((res: any) => {
+        console.log(res.result);
+      });
+    }
+  }
+);
+</script>
+
+<template>
+  <!-- 筛选区 -->
+  <div class="sub-filter">
+    <div class="item" v-for="i in 4" :key="i">
+      <div class="head">品牌：</div>
+      <div class="body">
+        <a href="javascript:;">全部</a>
+        <a href="javascript:;" v-for="i in 4" :key="i">小米</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="scss">
+// 筛选区
+.sub-filter {
+  background: #fff;
+  padding: 25px;
+  .item {
+    display: flex;
+    line-height: 40px;
+    .head {
+      width: 80px;
+      color: #999;
+    }
+    .body {
+      flex: 1;
+      a {
+        margin-right: 36px;
+        transition: all 0.3s;
+        display: inline-block;
+        &.active,
+        &:hover {
+          color: $xghColor;
+        }
+      }
+    }
+  }
+}
+</style>
