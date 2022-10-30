@@ -1,3 +1,0 @@
-interface IBrand {}
-
-export type {};

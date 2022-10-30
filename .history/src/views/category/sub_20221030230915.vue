@@ -32,17 +32,5 @@ import GoodsItem from "./components/goods-item.vue";
   background: #fff;
   padding: 0 25px;
   margin-top: 25px;
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 5px;
-    li {
-      margin-right: 20px;
-      margin-bottom: 20px;
-      &:nth-child(5n) {
-        margin-right: 0;
-      }
-    }
-  }
 }
 </style>
