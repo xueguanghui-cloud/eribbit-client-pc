@@ -44,7 +44,7 @@ watch(
   (newVal) => {
     if (newVal) {
       finished.value = false;
-      goodsList.value = []; // 导致列表为空,加载更多组件进入可视区,触发加数据
+      goodsList.value = [];
       requestParams = { categoryId: "", page: 1, pageSize: 20 };
     }
   }

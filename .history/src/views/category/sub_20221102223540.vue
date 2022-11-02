@@ -43,6 +43,8 @@ watch(
   () => route.params.id,
   (newVal) => {
     if (newVal) {
+      console.log("aaaa");
+
       finished.value = false;
       goodsList.value = []; // 导致列表为空,加载更多组件进入可视区,触发加数据
       requestParams = { categoryId: "", page: 1, pageSize: 20 };

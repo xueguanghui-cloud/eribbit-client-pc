@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { ref } from "vue";
 import SubBread from "./components/sub-bread.vue";
 import SubFilter from "./components/sub-filter.vue";
 import SubSort from "./components/sub-sort.vue";
 import GoodsItem from "./components/goods-item.vue";
 import { findSubCategoryGoods } from "@/api/category";
 import type { IParams } from "@/types/category/params";
+import { useRoute } from "vue-router";
 import type { IGood } from "@/types/good";
 const route = useRoute();
 const loading = ref(false);
 const finished = ref(false);
-const goodsList = ref<IGood[]>([]);
+const goodList = ref<IGood[]>([]);
 
-let requestParams: IParams = {
+const requestParams: IParams = {
   categoryId: "",
   page: 1,
   pageSize: 20,
@@ -24,31 +24,9 @@ const getData = () => {
   // 设置二级分类ID
   requestParams.categoryId = route.params.id as string;
   findSubCategoryGoods(requestParams).then((res: any) => {
-    if (res.result.items.length) {
-      console.log(res.result.items);
-      res.result.items.forEach((goods: IGood) => {
-        goodsList.value.push(goods);
-      });
-      requestParams.page++;
-      loading.value = false;
-    } else {
-      loading.value = false;
-      finished.value = true;
-    }
+    console.log(res.result);
   });
 };
-
-// 在更改了二级分类的时候需要重新加载数据
-watch(
-  () => route.params.id,
-  (newVal) => {
-    if (newVal) {
-      finished.value = false;
-      goodsList.value = []; // 导致列表为空,加载更多组件进入可视区,触发加数据
-      requestParams = { categoryId: "", page: 1, pageSize: 20 };
-    }
-  }
-);
 </script>
 
 <template>
@@ -64,8 +42,8 @@ watch(
         <SubSort></SubSort>
         <!-- 商品列表 -->
         <ul>
-          <li v-for="good in goodsList" :key="good.id">
-            <GoodsItem :good="good" />
+          <li v-for="i in 20" :key="i">
+            <GoodsItem :goods="{}" />
           </li>
         </ul>
         <!-- 无限加载组件 -->

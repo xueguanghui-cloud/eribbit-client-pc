@@ -2,8 +2,7 @@
 import { useIntersectionObserver } from "@vueuse/core";
 import { ref } from "vue";
 
-const emit = defineEmits(["infinite"]);
-const props = defineProps({
+defineProps({
   loading: { type: Boolean, default: false },
   finished: { type: Boolean, default: false },
 });
@@ -14,10 +13,8 @@ const { stop } = useIntersectionObserver(
   target,
   ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      // 触发加载事件条件: 请求完成(loading: false), 数据未加载完毕(finished: false)
-      if (!props.loading && !props.finished) {
-        emit("infinite");
-      }
+      console.log("进入可视区");
+      //   触发加载事件条件: 请求完成, 数据加载完毕
     }
   },
   {

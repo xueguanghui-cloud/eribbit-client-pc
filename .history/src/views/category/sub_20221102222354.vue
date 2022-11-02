@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import SubBread from "./components/sub-bread.vue";
 import SubFilter from "./components/sub-filter.vue";
@@ -13,7 +13,7 @@ const loading = ref(false);
 const finished = ref(false);
 const goodsList = ref<IGood[]>([]);
 
-let requestParams: IParams = {
+const requestParams: IParams = {
   categoryId: "",
   page: 1,
   pageSize: 20,
@@ -29,26 +29,13 @@ const getData = () => {
       res.result.items.forEach((goods: IGood) => {
         goodsList.value.push(goods);
       });
-      requestParams.page++;
+
       loading.value = false;
     } else {
-      loading.value = false;
       finished.value = true;
     }
   });
 };
-
-// 在更改了二级分类的时候需要重新加载数据
-watch(
-  () => route.params.id,
-  (newVal) => {
-    if (newVal) {
-      finished.value = false;
-      goodsList.value = []; // 导致列表为空,加载更多组件进入可视区,触发加数据
-      requestParams = { categoryId: "", page: 1, pageSize: 20 };
-    }
-  }
-);
 </script>
 
 <template>
@@ -64,8 +51,9 @@ watch(
         <SubSort></SubSort>
         <!-- 商品列表 -->
         <ul>
-          <li v-for="good in goodsList" :key="good.id">
-            <GoodsItem :good="good" />
+          <li v-for="goods in goodsList" :key="goods.id">
+            {{ goods.picture }}
+            <GoodsItem :goods="goods" />
           </li>
         </ul>
         <!-- 无限加载组件 -->

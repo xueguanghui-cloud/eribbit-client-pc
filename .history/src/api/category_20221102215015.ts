@@ -1,6 +1,5 @@
 // 定义分类相关API接口
-import { get, post } from "@/utils/request";
-import type { IParams } from "@/types/category/params";
+import { get } from "@/utils/request";
 
 /**
  * 获取所有分类（顶级，二级，对应的商品推荐数据）
@@ -21,7 +20,7 @@ export const findTopCategory = (id: string) => {
 
 /**
  * 获取二级类目下的筛选数据
- * @param { String } id - 二级类目ID
+ * @param { String } id - e二级类目ID
  * @return Promise
  * */
 export const findSubCategoryFilter = (id: string) => {
@@ -29,10 +28,10 @@ export const findSubCategoryFilter = (id: string) => {
 };
 
 /**
- * 获取二级类目下的商品(筛选条件)
- * @param { String } params - 参考接口文档
+ * 获取二级类目下的筛选数据
+ * @param { String } id - e二级类目ID
  * @return Promise
  * */
-export const findSubCategoryGoods = (params: IParams) => {
-  return post("/category/goods/temporary", params);
+export const findSubCategoryGoods = (id: string) => {
+  return get("/category/sub/filter", { id });
 };
