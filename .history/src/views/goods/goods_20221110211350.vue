@@ -1,0 +1,101 @@
+<script setup lang="ts">
+import { findGoods } from "@/api/product";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import type { IGoods } from "@/types/goods/goods";
+import goodsRelevant from "./components/goods-relevant.vue";
+import goodsImage from "./components/goods-image.vue";
+// 获取商品详情
+const route = useRoute();
+const goods = ref<IGoods>();
+watch(
+  () => route.params.id,
+  (newValue) => {
+    if (newValue) {
+      findGoods(route.params.id as string).then((res: any) => {
+        goods.value = res.result;
+      });
+    }
+  },
+  { immediate: true }
+);
+</script>
+
+<template>
+  <div class="xgh-goods-page" v-if="goods">
+    <div class="container">
+      <!-- 面包屑 -->
+      <xgh-bread>
+        <xgh-bread-item to="/">首页</xgh-bread-item>
+        <xgh-bread-item :to="`/category/${goods.categories[1].id}`">
+          {{ goods.categories[1].name }}
+        </xgh-bread-item>
+        <xgh-bread-item :to="`/category/sub/${goods.categories[0].id}`">
+          {{ goods.categories[0].name }}
+        </xgh-bread-item>
+        <xgh-bread-item>
+          {{ goods.name }}
+        </xgh-bread-item>
+      </xgh-bread>
+      <!-- 商品信息 -->
+      <!-- 商品信息 -->
+      <div class="goods-info">
+        <div class="media">
+          <goodsImage></goodsImage>
+        </div>
+        <div class="spec"></div>
+      </div>
+      <!-- 商品推荐 -->
+      <goodsRelevant />
+      <!-- 商品详情 -->
+      <div class="goods-footer">
+        <div class="goods-article">
+          <!-- 商品+评价 -->
+          <div class="goods-tabs"></div>
+          <!-- 注意事项 -->
+          <div class="goods-warn"></div>
+        </div>
+        <!-- 24热榜+专题推荐 -->
+        <div class="goods-aside"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.goods-info {
+  min-height: 600px;
+  background: #fff;
+  display: flex;
+  .media {
+    width: 580px;
+    height: 600px;
+    padding: 30px 50px;
+  }
+  .spec {
+    flex: 1;
+    padding: 30px 30px 30px 0;
+  }
+}
+.goods-footer {
+  display: flex;
+  margin-top: 20px;
+  .goods-article {
+    width: 940px;
+    margin-right: 20px;
+  }
+  .goods-aside {
+    width: 280px;
+    min-height: 1000px;
+  }
+}
+.goods-tabs {
+  min-height: 600px;
+  background: #fff;
+}
+.goods-warn {
+  min-height: 600px;
+  background: #fff;
+  margin-top: 20px;
+}
+</style>
