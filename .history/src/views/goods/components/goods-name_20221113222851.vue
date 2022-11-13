@@ -42,7 +42,7 @@ if (props.goods.userAddresses) {
       <dt>配送</dt>
       <dd>
         至
-        <xgh-city :fullLocation="fullLocation"></xgh-city>
+        <xgh-city fullLocation="fullLocation"></xgh-city>
       </dd>
     </dl>
     <dl>

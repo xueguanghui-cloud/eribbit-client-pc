@@ -17,12 +17,6 @@ if (props.goods.userAddresses) {
   const defaultAddress = props.goods.userAddresses.find(
     (item) => item.isDefault === 1
   );
-  if (defaultAddress) {
-    provinceCode.value = defaultAddress.provinceCode;
-    cityCode.value = defaultAddress.cityCode;
-    countyCode.value = defaultAddress.countyCode;
-    fullLocation.value = defaultAddress.fullcation;
-  }
 }
 </script>
 
@@ -42,7 +36,7 @@ if (props.goods.userAddresses) {
       <dt>配送</dt>
       <dd>
         至
-        <xgh-city :fullLocation="fullLocation"></xgh-city>
+        <xgh-city></xgh-city>
       </dd>
     </dl>
     <dl>

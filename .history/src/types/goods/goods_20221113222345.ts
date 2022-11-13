@@ -23,7 +23,7 @@ interface IUserAddresses {
   cityCode: string;
   contact: string;
   countyCode: string;
-  fullcation: string;
+  fulloaction: string;
   id: string;
   isDefault: number;
   postalCode: string;

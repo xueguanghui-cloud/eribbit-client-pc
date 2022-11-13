@@ -23,12 +23,9 @@ interface IUserAddresses {
   cityCode: string;
   contact: string;
   countyCode: string;
-  fullcation: string;
+  fulloaction: string;
   id: string;
   isDefault: number;
-  postalCode: string;
-  provinceCode: string;
-  receiver: string;
 }
 
 interface ISpecs {
@@ -69,7 +66,7 @@ interface IGoods {
   skus: ISku[];
   specs: ISpecs[];
   spuCode: string;
-  userAddresses: IUserAddresses[];
+  userAddresses: [];
   videoScale: number;
 }
 

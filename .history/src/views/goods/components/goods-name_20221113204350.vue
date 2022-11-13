@@ -1,29 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { IGoods } from "@/types/goods/goods";
 type TGoods = {
-  goods: IGoods | undefined;
+  goods: IGoods;
 };
-const props = withDefaults(defineProps<TGoods>(), {
-  goods: undefined,
+withDefaults(defineProps<TGoods>(), {
+  goods: (): IGoods => ({}),
 });
-// 给后台的四项数据(未登录)
-const provinceCode = ref("110000");
-const cityCode = ref("119900");
-const countyCode = ref("110101");
-const fullLocation = ref("北京市 市辖区 东城区");
-// 取出用户收获地址中默认的地址给四个数据赋值（已登录）
-if (props.goods.userAddresses) {
-  const defaultAddress = props.goods.userAddresses.find(
-    (item) => item.isDefault === 1
-  );
-  if (defaultAddress) {
-    provinceCode.value = defaultAddress.provinceCode;
-    cityCode.value = defaultAddress.cityCode;
-    countyCode.value = defaultAddress.countyCode;
-    fullLocation.value = defaultAddress.fullcation;
-  }
-}
 </script>
 
 <template>
@@ -40,10 +22,7 @@ if (props.goods.userAddresses) {
     </dl>
     <dl>
       <dt>配送</dt>
-      <dd>
-        至
-        <xgh-city :fullLocation="fullLocation"></xgh-city>
-      </dd>
+      <dd>至</dd>
     </dl>
     <dl>
       <dt>服务</dt>
