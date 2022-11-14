@@ -1,0 +1,77 @@
+<script setup lang="ts">
+import type { IGoods } from "@/types/goods/goods";
+
+type TGoods = {
+  goods: IGoods | undefined;
+};
+const props = withDefaults(defineProps<TGoods>(), {
+  goods: undefined,
+});
+// 选中与取消选中,约定在每一个按钮都拥有自己的选中状态数据:selected
+const selectSku = () => {};
+</script>
+
+<template>
+  <div class="goods-sku" v-if="goods">
+    <dl v-for="spec in goods.specs" :key="spec.id">
+      <dt>{{ spec.name }}</dt>
+      <dd>
+        <template v-for="value in spec.values" :key="value.name">
+          <img
+            class="selected(value)"
+            @click="selectSku"
+            v-if="value.picture"
+            :src="value.picture"
+            :title="value.name"
+          />
+          <span v-else @click="selectSku(value)">{{ value.name }}</span>
+        </template>
+      </dd>
+    </dl>
+  </div>
+</template>
+
+<style scoped lang="scss">
+@mixin sku-state-mixin() {
+  border: 1px solid #e4e4e4;
+  margin-right: 10px;
+  cursor: pointer;
+  &.selected {
+    border-color: $xghColor;
+  }
+  &.disabled {
+    opacity: 0.6;
+    border-style: dashed;
+    cursor: not-allowed;
+  }
+}
+.goods-sku {
+  padding-left: 10px;
+  padding-top: 20px;
+  dl {
+    display: flex;
+    padding-bottom: 20px;
+    align-items: center;
+    dt {
+      width: 50px;
+      color: #999;
+    }
+    dd {
+      flex: 1;
+      color: #666;
+      > img {
+        width: 50px;
+        height: 50px;
+        @include sku-state-mixin();
+      }
+      > span {
+        display: inline-block;
+        height: 30px;
+        line-height: 28px;
+        padding: 0 20px;
+        @include sku-state-mixin();
+      }
+    }
+  }
+}
+</style>
