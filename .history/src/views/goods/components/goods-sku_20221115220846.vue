@@ -22,17 +22,13 @@ const selectSku = (value: IValue, values: IValue[]) => {
   }
 };
 
-type TPathMap = {
-  [key: string]: string[];
-};
-
 // 得到一个路径字典对象
 const getPathMap = (skus: ISku[]) => {
   // 1. 得到所有的sku集合, props.goods.skus
   // 2. 从所有的skus中筛选出有效的sku
   // 3. 根据有效的sku使用power-set算法得到子集
   // 4. 根据子集往路径字典对象中存储 key-value
-  const pathMap: TPathMap = {};
+  const pathMap = new Set();
   skus.forEach((sku) => {
     if (sku.inventory > 0) {
       // 计算子集, 例如: [1, 2, 3] => [[1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]
@@ -43,15 +39,10 @@ const getPathMap = (skus: ISku[]) => {
       specArrPowerSet.forEach((arr) => {
         // 根据arr得到字符串的key,约定key是: ['蓝色', '美国'] ==> '蓝色★美国'
         const key = arr.join(SPLITER);
-        if (pathMap[key]) {
-          pathMap[key].push(sku.id);
-        } else {
-          pathMap[key] = [sku.id];
-        }
+        pathMap.add({key, sku.id})
       });
     }
   });
-  console.log(pathMap);
 };
 
 const pathMap = getPathMap(props.goods.skus);
