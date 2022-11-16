@@ -33,12 +33,11 @@ interface IUserAddresses {
 
 interface IValue {
   selected: boolean;
-  disabled: boolean;
   desc: string;
   name: string;
   picture: string;
 }
-interface ISpec {
+interface ISpecs {
   id: string;
   name: string;
   values: IValue[];
@@ -76,4 +75,4 @@ interface IGoods {
   videoScale: number;
 }
 
-export type { IGoods, IValue, ISku, ISpecs, ISpec };
+export type { IGoods, IValue, ISku, ISpecs, IS };

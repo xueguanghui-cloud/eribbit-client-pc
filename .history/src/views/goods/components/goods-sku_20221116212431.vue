@@ -9,7 +9,6 @@ type TGoods = {
 type TPathMap = {
   [key: string]: string[];
 };
-
 const props = withDefaults(defineProps<TGoods>(), {
   goods: undefined,
 });
@@ -44,12 +43,12 @@ const getPathMap = (skus: ISku[]) => {
 };
 
 const getSelectedValues = (specs: ISpec[]) => {
-  const selectedArr: (string | undefined)[] = [];
+  const arr: (string | undefined)[] = [];
   specs.forEach((item) => {
     const selectedValue = item.values.find((val) => val.selected);
-    selectedArr.push(selectedValue ? selectedValue.name : undefined);
+    arr.push(selectedValue ? selectedValue.name : undefined);
   });
-  return selectedArr;
+  return arr;
 };
 
 const updateDisableedStatus = (specs: ISpec[], pathMap: TPathMap) => {
@@ -72,10 +71,10 @@ const updateDisableedStatus = (specs: ISpec[], pathMap: TPathMap) => {
 };
 
 const pathMap = getPathMap(props.goods.skus);
-
 // ☆ 组件初始化:更新按钮禁用状态
 updateDisableedStatus(props.goods.specs, pathMap);
 
+// ☆ 点击按钮: 更新按钮禁用状态
 // 选中与取消选中,约定在每一个按钮都拥有自己的选中状态数据:selected
 // 点击的是已选中,只需要取消当前选中,点击的是未选中,把同一个规格的按钮改为未选中,当前点击的改为选中
 const selectSku = (value: IValue, values: IValue[]) => {
@@ -89,8 +88,6 @@ const selectSku = (value: IValue, values: IValue[]) => {
     });
     value.selected = true;
   }
-  // ☆ 点击按钮: 更新按钮禁用状态
-  updateDisableedStatus(props.goods.specs, pathMap);
 };
 </script>
 

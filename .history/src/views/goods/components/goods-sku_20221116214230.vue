@@ -43,6 +43,7 @@ const getPathMap = (skus: ISku[]) => {
   return pathMap;
 };
 
+// 查看按钮是否可以选中
 const getSelectedValues = (specs: ISpec[]) => {
   const selectedArr: (string | undefined)[] = [];
   specs.forEach((item) => {

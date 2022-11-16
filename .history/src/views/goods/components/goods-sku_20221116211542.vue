@@ -9,11 +9,25 @@ type TGoods = {
 type TPathMap = {
   [key: string]: string[];
 };
-
 const props = withDefaults(defineProps<TGoods>(), {
   goods: undefined,
 });
 const SPLITER = "★";
+
+// 选中与取消选中,约定在每一个按钮都拥有自己的选中状态数据:selected
+// 点击的是已选中,只需要取消当前选中,点击的是未选中,把同一个规格的按钮改为未选中,当前点击的改为选中
+const selectSku = (value: IValue, values: IValue[]) => {
+  // 当按钮是禁用时,组织程序的运行
+  if (value.disabled) return;
+  if (value.selected) {
+    value.selected = false;
+  } else {
+    values.forEach((value: any) => {
+      value.selected = false;
+    });
+    value.selected = true;
+  }
+};
 
 // 得到一个路径字典对象
 const getPathMap = (skus: ISku[]) => {
@@ -43,55 +57,29 @@ const getPathMap = (skus: ISku[]) => {
   return pathMap;
 };
 
-const getSelectedValues = (specs: ISpec[]) => {
-  const selectedArr: (string | undefined)[] = [];
-  specs.forEach((item) => {
-    const selectedValue = item.values.find((val) => val.selected);
-    selectedArr.push(selectedValue ? selectedValue.name : undefined);
-  });
-  return selectedArr;
-};
-
 const updateDisableedStatus = (specs: ISpec[], pathMap: TPathMap) => {
   // 约定每个按钮的状态有本身的disabled数据来控制
-  specs.forEach((item, index) => {
-    const selectedVaules = getSelectedValues(specs);
+  specs.forEach((item) => {
     item.values.forEach((val) => {
-      // 判断当前是否选中,选中不用判断,
-      if (val.selected) return;
-      // 未选中, 拿当前的值按照顺序逃入选中的数组中
-      selectedVaules[index] = val.name;
-      // 剔除 undefined 数据,按分隔符拼接成key
-      const key = selectedVaules
-        .filter((selectedValue) => selectedValue)
-        .join(SPLITER);
       // 去路径字典中查找是否有数据,有就可以点击,没有就禁用(true)
-      val.disabled = !pathMap[key];
+      val.disabled = !pathMap[val.name];
     });
+  });
+};
+
+const getSelectedValues = (specs: ISpec[]) => {
+  const arr = [];
+  specs.forEach((item) => {
+    const selectedValue = item.values.find((val) => val.selected);
+    arr.push(selectedValue ? selectedValue.name : undefined);
   });
 };
 
 const pathMap = getPathMap(props.goods.skus);
-
 // ☆ 组件初始化:更新按钮禁用状态
 updateDisableedStatus(props.goods.specs, pathMap);
 
-// 选中与取消选中,约定在每一个按钮都拥有自己的选中状态数据:selected
-// 点击的是已选中,只需要取消当前选中,点击的是未选中,把同一个规格的按钮改为未选中,当前点击的改为选中
-const selectSku = (value: IValue, values: IValue[]) => {
-  // 当按钮是禁用时,组织程序的运行
-  if (value.disabled) return;
-  if (value.selected) {
-    value.selected = false;
-  } else {
-    values.forEach((value: any) => {
-      value.selected = false;
-    });
-    value.selected = true;
-  }
-  // ☆ 点击按钮: 更新按钮禁用状态
-  updateDisableedStatus(props.goods.specs, pathMap);
-};
+// ☆ 点击按钮: 更新按钮禁用状态
 </script>
 
 <template>

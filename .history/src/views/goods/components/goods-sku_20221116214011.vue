@@ -72,7 +72,6 @@ const updateDisableedStatus = (specs: ISpec[], pathMap: TPathMap) => {
 };
 
 const pathMap = getPathMap(props.goods.skus);
-
 // ☆ 组件初始化:更新按钮禁用状态
 updateDisableedStatus(props.goods.specs, pathMap);
 

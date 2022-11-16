@@ -9,7 +9,6 @@ type TGoods = {
 type TPathMap = {
   [key: string]: string[];
 };
-
 const props = withDefaults(defineProps<TGoods>(), {
   goods: undefined,
 });
@@ -44,12 +43,12 @@ const getPathMap = (skus: ISku[]) => {
 };
 
 const getSelectedValues = (specs: ISpec[]) => {
-  const selectedArr: (string | undefined)[] = [];
+  const arr: (string | undefined)[] = [];
   specs.forEach((item) => {
     const selectedValue = item.values.find((val) => val.selected);
-    selectedArr.push(selectedValue ? selectedValue.name : undefined);
+    arr.push(selectedValue ? selectedValue.name : undefined);
   });
-  return selectedArr;
+  return arr;
 };
 
 const updateDisableedStatus = (specs: ISpec[], pathMap: TPathMap) => {
@@ -72,7 +71,6 @@ const updateDisableedStatus = (specs: ISpec[], pathMap: TPathMap) => {
 };
 
 const pathMap = getPathMap(props.goods.skus);
-
 // ☆ 组件初始化:更新按钮禁用状态
 updateDisableedStatus(props.goods.specs, pathMap);
 

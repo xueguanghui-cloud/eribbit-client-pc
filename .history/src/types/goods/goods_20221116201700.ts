@@ -33,7 +33,6 @@ interface IUserAddresses {
 
 interface IValue {
   selected: boolean;
-  disabled: boolean;
   desc: string;
   name: string;
   picture: string;
