@@ -82,7 +82,7 @@ const initDefaultSelected = (goods: IGoods, skuId: string) => {
     const val = spec.values.find(
       (value) => value.name === sku?.specs[index].valueName
     );
-    val && (val.selected = true);
+    val ? val.selected = true;
   });
 };
 
@@ -116,12 +116,13 @@ const selectSku = (value: IValue, values: IValue[]) => {
     (v) => v
   );
   if (validSelectedValues.length === props.goods.specs.length) {
+    console.log("完整");
     const skuIds = pathMap[validSelectedValues.join(SPLITER)];
     const sku = props.goods.skus.find((sku) => sku.id === skuIds[0]);
     emit("change", {
-      skuId: sku?.id,
-      price: sku?.price,
-      oldPrice: sku?.oldPrice,
+      skuId: sku!.id,
+      price: sku!.price,
+      oldPrice: sku!.oldPrice,
       inventory: sku?.inventory,
       // 属性名:属性值, 属性名1:属性值1,...
       specsText: sku?.specs

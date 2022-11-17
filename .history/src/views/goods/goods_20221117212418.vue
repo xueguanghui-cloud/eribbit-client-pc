@@ -32,9 +32,6 @@ const changeSku = (sku: any) => {
     goods.value!.inventory = sku.inventory;
   }
 };
-
-// 选择的商品数量
-const selectedCount = ref(1);
 </script>
 
 <template>
@@ -67,15 +64,7 @@ const selectedCount = ref(1);
             skuId="1771018"
             @change="changeSku"
           ></goodsSku>
-          <xgh-numbox
-            v-model="selectedCount"
-            label="数量"
-            :max="goods.inventory"
-            :min="1"
-          />
-          <xgh-button type="primary" style="margin-top: 20px">
-            加入购物车
-          </xgh-button>
+          <xgh-numbox v-model="" />
         </div>
       </div>
       <!-- 商品推荐 -->

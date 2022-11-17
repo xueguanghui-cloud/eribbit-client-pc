@@ -22,19 +22,6 @@ watch(
   },
   { immediate: true }
 );
-
-const changeSku = (sku: any) => {
-  // 修改商品的原价现价库存等信息
-  if (sku.skuId) {
-    goods.value!.price = sku.price;
-    goods.value!.oldPrice = sku.oldPrice;
-    goods.value!.price = sku.price;
-    goods.value!.inventory = sku.inventory;
-  }
-};
-
-// 选择的商品数量
-const selectedCount = ref(1);
 </script>
 
 <template>
@@ -62,20 +49,7 @@ const selectedCount = ref(1);
         </div>
         <div class="spec">
           <goodsName :goods="goods"></goodsName>
-          <goodsSku
-            :goods="goods"
-            skuId="1771018"
-            @change="changeSku"
-          ></goodsSku>
-          <xgh-numbox
-            v-model="selectedCount"
-            label="数量"
-            :max="goods.inventory"
-            :min="1"
-          />
-          <xgh-button type="primary" style="margin-top: 20px">
-            加入购物车
-          </xgh-button>
+          <goodsSku :goods="goods" :skuId="1771007"></goodsSku>
         </div>
       </div>
       <!-- 商品推荐 -->

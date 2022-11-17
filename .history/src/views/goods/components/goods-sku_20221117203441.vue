@@ -10,7 +10,7 @@ type TGoods = {
 type TPathMap = {
   [key: string]: string[];
 };
-const emit = defineEmits(["change"]);
+
 const props = withDefaults(defineProps<TGoods>(), {
   goods: undefined,
   skuId: "",
@@ -74,23 +74,10 @@ const updateDisableedStatus = (specs: ISpec[], pathMap: TPathMap) => {
 };
 
 // 默认选中
-const initDefaultSelected = (goods: IGoods, skuId: string) => {
-  // 找出sku的信息
-  // 遍历每一个按钮,按钮的值和sku记录的值相同,就选中
-  const sku = goods.skus.find((sku) => sku.id === skuId);
-  goods.specs.forEach((spec, index) => {
-    const val = spec.values.find(
-      (value) => value.name === sku?.specs[index].valueName
-    );
-    val && (val.selected = true);
-  });
-};
+const initDefaultSelected = (goods: IGoods, skuId: string) => {};
 
 const pathMap = getPathMap(props.goods.skus);
-// 根据skuId初始化选中
-if (props.skuId) {
-  initDefaultSelected(props.goods, props.skuId);
-}
+
 // ☆ 组件初始化:更新按钮禁用状态
 updateDisableedStatus(props.goods.specs, pathMap);
 
@@ -109,33 +96,6 @@ const selectSku = (value: IValue, values: IValue[]) => {
   }
   // ☆ 点击按钮: 更新按钮禁用状态
   updateDisableedStatus(props.goods.specs, pathMap);
-  // 将选择的sku信息通知个父组件 {skuId, price, oldPrice, inventroy,specsText}
-  // 选择完整的sku组合按钮,才可以拿到sku信息,提交给付租金按
-  // 不是完整的sku组合按钮,提交空对象父组件
-  const validSelectedValues = getSelectedValues(props.goods.specs).filter(
-    (v) => v
-  );
-  if (validSelectedValues.length === props.goods.specs.length) {
-    const skuIds = pathMap[validSelectedValues.join(SPLITER)];
-    const sku = props.goods.skus.find((sku) => sku.id === skuIds[0]);
-    emit("change", {
-      skuId: sku?.id,
-      price: sku?.price,
-      oldPrice: sku?.oldPrice,
-      inventory: sku?.inventory,
-      // 属性名:属性值, 属性名1:属性值1,...
-      specsText: sku?.specs
-        .reduce(
-          (previousValue, currentValue) =>
-            `${previousValue} ${currentValue.name}: ${currentValue.valueName}`,
-          ""
-        )
-        .trim(),
-    });
-  } else {
-    // 父组件需要判断是否规格选择完整,不完整不能加入购物车
-    emit("change", {});
-  }
 };
 </script>
 

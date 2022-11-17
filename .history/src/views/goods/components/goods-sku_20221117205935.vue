@@ -82,7 +82,7 @@ const initDefaultSelected = (goods: IGoods, skuId: string) => {
     const val = spec.values.find(
       (value) => value.name === sku?.specs[index].valueName
     );
-    val && (val.selected = true);
+    val!.selected = true;
   });
 };
 
@@ -116,24 +116,8 @@ const selectSku = (value: IValue, values: IValue[]) => {
     (v) => v
   );
   if (validSelectedValues.length === props.goods.specs.length) {
-    const skuIds = pathMap[validSelectedValues.join(SPLITER)];
-    const sku = props.goods.skus.find((sku) => sku.id === skuIds[0]);
-    emit("change", {
-      skuId: sku?.id,
-      price: sku?.price,
-      oldPrice: sku?.oldPrice,
-      inventory: sku?.inventory,
-      // 属性名:属性值, 属性名1:属性值1,...
-      specsText: sku?.specs
-        .reduce(
-          (previousValue, currentValue) =>
-            `${previousValue} ${currentValue.name}: ${currentValue.valueName}`,
-          ""
-        )
-        .trim(),
-    });
+    console.log("完整");
   } else {
-    // 父组件需要判断是否规格选择完整,不完整不能加入购物车
     emit("change", {});
   }
 };

@@ -73,9 +73,7 @@ const selectedCount = ref(1);
             :max="goods.inventory"
             :min="1"
           />
-          <xgh-button type="primary" style="margin-top: 20px">
-            加入购物车
-          </xgh-button>
+          <xgh-button type="plain">加入购物车</xgh-button>
         </div>
       </div>
       <!-- 商品推荐 -->

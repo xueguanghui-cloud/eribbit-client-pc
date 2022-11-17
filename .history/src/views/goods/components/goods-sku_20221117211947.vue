@@ -119,12 +119,12 @@ const selectSku = (value: IValue, values: IValue[]) => {
     const skuIds = pathMap[validSelectedValues.join(SPLITER)];
     const sku = props.goods.skus.find((sku) => sku.id === skuIds[0]);
     emit("change", {
-      skuId: sku?.id,
-      price: sku?.price,
-      oldPrice: sku?.oldPrice,
+      skuId: sku.id,
+      price: sku.price,
+      oldPrice: sku.oldPrice,
       inventory: sku?.inventory,
       // 属性名:属性值, 属性名1:属性值1,...
-      specsText: sku?.specs
+      specsText: sku.specs
         .reduce(
           (previousValue, currentValue) =>
             `${previousValue} ${currentValue.name}: ${currentValue.valueName}`,
