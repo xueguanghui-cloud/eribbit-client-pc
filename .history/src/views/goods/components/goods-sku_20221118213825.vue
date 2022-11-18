@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import powerSet from "@/vender/power-set";
 import type { IGoods, IValue, ISku, ISpec } from "@/types/goods/goods";
-import { nextTick } from "vue";
 
 type TGoods = {
   goods: IGoods | undefined;
@@ -87,6 +86,7 @@ const initDefaultSelected = (goods: IGoods, skuId: string) => {
     val && (val.selected = true);
   });
 };
+
 const pathMap = getPathMap(props.goods.skus);
 // 根据skuId初始化选中
 if (props.skuId) {

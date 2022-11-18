@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { defineProps, onUnmounted, ref, watch, withDefaults } from "vue";
 import type { ISlider } from "@/types/sliders";
-import type { IGood } from "@/types/good";
 
 type TSlider = {
-  sliders: ISlider[] | IGood[][];
+  sliders: ISlider[];
   duration?: number;
   autoPlay?: boolean;
 };
@@ -80,11 +79,15 @@ onUnmounted(() => {
       <li
         class="carousel-item"
         v-for="(slider, index) in sliders"
-        :key="index"
+        :key="slider.id"
         :class="{ fade: shouSliderIndex === index }"
       >
+        <!-- 图片 -->
+        <RouterLink v-if="slider.imgUrl" :to="slider.hrefUrl">
+          <img v-lazy="slider.imgUrl" :alt="slider.imgUrl" />
+        </RouterLink>
         <!-- 商品列表 -->
-        <div class="slider" v-if="slider instanceof Array">
+        <div class="slider" v-else>
           <router-link
             v-for="good in slider"
             :key="good.id"
@@ -95,10 +98,6 @@ onUnmounted(() => {
             <p class="price">{{ good.price }}</p>
           </router-link>
         </div>
-        <!-- 图片 -->
-        <RouterLink v-else :to="slider.hrefUrl">
-          <img v-lazy="slider.imgUrl" :alt="slider.imgUrl" />
-        </RouterLink>
       </li>
     </ul>
     <a @click="toggle(-1)" href="javascript:;" class="carousel-btn prev"
@@ -195,31 +194,6 @@ onUnmounted(() => {
   &:hover {
     .carousel-btn {
       opacity: 1;
-    }
-  }
-}
-// 轮播商品
-.slider {
-  display: flex;
-  justify-content: space-around;
-  padding: 0 40px;
-  > a {
-    width: 240px;
-    text-align: center;
-    img {
-      padding: 20px;
-      width: 230px !important;
-      height: 230px !important;
-    }
-    .name {
-      font-size: 16px;
-      color: #666;
-      padding: 0 40px;
-    }
-    .price {
-      font-size: 16px;
-      color: $priceColor;
-      margin-top: 15px;
     }
   }
 }

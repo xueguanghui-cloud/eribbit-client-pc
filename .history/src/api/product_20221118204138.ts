@@ -12,11 +12,11 @@ export const findGoods = (id: string) => {
 };
 
 /**
- * 获取相关推荐商品|猜你喜欢商品
+ * 提供商品
  * @param {String} id - 商品ID, 传值相关推荐,不传猜你喜欢
- * @param {Number} limit - 商品数量
+ * @param {number} limit
  */
 
-export const findRelevantGoods = (id?: string, limit = 16) => {
-  return get("/goods/relevant", { id, limit });
+export const findRelevantGoods = ({ id: string, limit = 16 }) => {
+  return get("/goods", { id });
 };

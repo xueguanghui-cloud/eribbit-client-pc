@@ -67,26 +67,4 @@ findRelevantGoods(props.goodsId).then((res: any) => {
     }
   }
 }
-:deep(.xgh-carousel) {
-  height: 380px;
-  .carousel {
-    &-indicator {
-      bottom: 30px;
-      span {
-        &.active {
-          background: $xghColor;
-        }
-      }
-    }
-    &-btn {
-      top: 110px;
-      opacity: 1;
-      background: rgba(0, 0, 0, 0);
-      color: #ddd;
-      i {
-        font-size: 30px;
-      }
-    }
-  }
-}
 </style>

@@ -87,7 +87,10 @@ const initDefaultSelected = (goods: IGoods, skuId: string) => {
     val && (val.selected = true);
   });
 };
-const pathMap = getPathMap(props.goods.skus);
+let pathMap;
+nextTick(() => {
+  pathMap = getPathMap(props.goods.skus);
+});
 // 根据skuId初始化选中
 if (props.skuId) {
   initDefaultSelected(props.goods, props.skuId);

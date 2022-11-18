@@ -11,7 +11,6 @@ import goodsSku from "./components/goods-sku.vue";
 // 获取商品详情
 const route = useRoute();
 const goods = ref<IGoods>();
-const selectedSkuId = ref(goods.value?.skus[0].id);
 watch(
   () => route.params.id,
   (newValue) => {
@@ -65,8 +64,7 @@ const selectedCount = ref(1);
           <goodsName :goods="goods"></goodsName>
           <goodsSku
             :goods="goods"
-            :skuId="selectedSkuId"
-            :key="goods.id"
+            skuId="1771018"
             @change="changeSku"
           ></goodsSku>
           <xgh-numbox

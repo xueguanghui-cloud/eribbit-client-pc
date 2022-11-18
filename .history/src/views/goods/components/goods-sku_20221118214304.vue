@@ -141,7 +141,7 @@ const selectSku = (value: IValue, values: IValue[]) => {
 </script>
 
 <template>
-  <div class="goods-sku" v-if="goods">
+  <div class="goods-sku" v-if="goods?.id">
     <dl v-for="spec in goods.specs" :key="spec.id">
       <dt>{{ spec.name }}</dt>
       <dd>

@@ -11,7 +11,6 @@ import goodsSku from "./components/goods-sku.vue";
 // 获取商品详情
 const route = useRoute();
 const goods = ref<IGoods>();
-const selectedSkuId = ref(goods.value?.skus[0].id);
 watch(
   () => route.params.id,
   (newValue) => {
@@ -23,6 +22,8 @@ watch(
   },
   { immediate: true }
 );
+
+const selectedSkuId = goods.value?.skus[0].id;
 
 const changeSku = (sku: any) => {
   // 修改商品的原价现价库存等信息

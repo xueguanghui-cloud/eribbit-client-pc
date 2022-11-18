@@ -17,6 +17,6 @@ export const findGoods = (id: string) => {
  * @param {Number} limit - 商品数量
  */
 
-export const findRelevantGoods = (id?: string, limit = 16) => {
+export const findRelevantGoods = (id: string, limit = 16) => {
   return get("/goods/relevant", { id, limit });
 };

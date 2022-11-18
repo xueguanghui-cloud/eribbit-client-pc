@@ -80,11 +80,15 @@ onUnmounted(() => {
       <li
         class="carousel-item"
         v-for="(slider, index) in sliders"
-        :key="index"
+        :key="slider.id"
         :class="{ fade: shouSliderIndex === index }"
       >
+        <!-- 图片 -->
+        <RouterLink v-if="slider.imgUrl" :to="slider.hrefUrl">
+          <img v-lazy="slider.imgUrl" :alt="slider.imgUrl" />
+        </RouterLink>
         <!-- 商品列表 -->
-        <div class="slider" v-if="slider instanceof Array">
+        <div class="slider" v-else>
           <router-link
             v-for="good in slider"
             :key="good.id"
@@ -95,10 +99,6 @@ onUnmounted(() => {
             <p class="price">{{ good.price }}</p>
           </router-link>
         </div>
-        <!-- 图片 -->
-        <RouterLink v-else :to="slider.hrefUrl">
-          <img v-lazy="slider.imgUrl" :alt="slider.imgUrl" />
-        </RouterLink>
       </li>
     </ul>
     <a @click="toggle(-1)" href="javascript:;" class="carousel-btn prev"

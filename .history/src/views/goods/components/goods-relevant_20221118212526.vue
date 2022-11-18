@@ -67,14 +67,14 @@ findRelevantGoods(props.goodsId).then((res: any) => {
     }
   }
 }
-:deep(.xgh-carousel) {
+:deep(.xtx-carousel) {
   height: 380px;
   .carousel {
     &-indicator {
       bottom: 30px;
       span {
         &.active {
-          background: $xghColor;
+          background: @xtxColor;
         }
       }
     }

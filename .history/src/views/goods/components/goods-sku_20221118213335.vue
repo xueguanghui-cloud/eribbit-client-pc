@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import powerSet from "@/vender/power-set";
 import type { IGoods, IValue, ISku, ISpec } from "@/types/goods/goods";
-import { nextTick } from "vue";
 
 type TGoods = {
   goods: IGoods | undefined;
@@ -20,7 +19,7 @@ const SPLITER = "★";
 
 // 得到一个路径字典对象
 const getPathMap = (skus: ISku[]) => {
-  console.log("getPathMap");
+  console.log(" ");
   // 1. 得到所有的sku集合, props.goods.skus
   // 2. 从所有的skus中筛选出有效的sku
   // 3. 根据有效的sku使用power-set算法得到子集
@@ -87,6 +86,7 @@ const initDefaultSelected = (goods: IGoods, skuId: string) => {
     val && (val.selected = true);
   });
 };
+
 const pathMap = getPathMap(props.goods.skus);
 // 根据skuId初始化选中
 if (props.skuId) {

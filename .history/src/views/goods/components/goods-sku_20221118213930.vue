@@ -87,13 +87,15 @@ const initDefaultSelected = (goods: IGoods, skuId: string) => {
     val && (val.selected = true);
   });
 };
-const pathMap = getPathMap(props.goods.skus);
-// 根据skuId初始化选中
-if (props.skuId) {
-  initDefaultSelected(props.goods, props.skuId);
-}
-// ☆ 组件初始化:更新按钮禁用状态
-updateDisableedStatus(props.goods.specs, pathMap);
+nextTick(() => {
+  const pathMap = getPathMap(props.goods.skus);
+  // 根据skuId初始化选中
+  if (props.skuId) {
+    initDefaultSelected(props.goods, props.skuId);
+  }
+  // ☆ 组件初始化:更新按钮禁用状态
+  updateDisableedStatus(props.goods.specs, pathMap);
+});
 
 // 选中与取消选中,约定在每一个按钮都拥有自己的选中状态数据:selected
 // 点击的是已选中,只需要取消当前选中,点击的是未选中,把同一个规格的按钮改为未选中,当前点击的改为选中
