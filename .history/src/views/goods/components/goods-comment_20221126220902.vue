@@ -2,7 +2,6 @@
 import { reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { findCommentInfoByGoods, findCommentListByGoods } from "@/api/product";
-import goodsCommentImage from "./goods-comment-image.vue";
 import type {
   ICommentInfo,
   IRequestParams,
@@ -81,7 +80,6 @@ const requestParams = reactive<IRequestParams>({
 });
 
 // 初始化需要发送请求，筛选条件发生改变时发送请求，获取评价列表
-const total = ref(0);
 const commentList = ref<ICommentList[]>([]);
 watch(
   requestParams,
@@ -89,7 +87,6 @@ watch(
     // 页码重置为1
     findCommentListByGoods(route.params.id as string, requestParams).then(
       (res: any) => {
-        total.value = res.result.counts;
         commentList.value = res.result.items;
       }
     );
@@ -160,7 +157,6 @@ watch(
           <img :src="comment.member.avatar" alt="" />
           <span>{{ formatNickName(comment.member.nickname) }}</span>
         </div>
-
         <div class="body">
           <div class="score">
             <i
@@ -178,10 +174,6 @@ watch(
           <div class="text">
             {{ comment.content }}
           </div>
-          <goodsCommentImage
-            v-if="comment.pictures.length"
-            :pictures="comment.pictures"
-          ></goodsCommentImage>
           <div class="time">
             <span>{{ comment.createTime }}</span>
             <span class="zan"
@@ -192,13 +184,6 @@ watch(
         </div>
       </div>
     </div>
-    <!-- 分页器 -->
-    <xgh-pagination
-      v-if="total"
-      :total="total"
-      :pageSize="requestParams.pageSize"
-      v-model:currentPage="requestParams.page"
-    ></xgh-pagination>
   </div>
 </template>
 

@@ -1,0 +1,109 @@
+<script setup lang="ts">
+import { computed, ref } from "vue";
+
+// 约定按钮的个数 5个；如果需要是动态的数据，需要设置为响应式数据
+const buttonCount = 5;
+// 当前显示的页码;
+const currentPage = ref(1);
+// 总条数
+const toal = ref(100);
+const pageSize = ref(10);
+// 总页数 = 总条数 / 每页条数 向上取整; 起始页码，结束页码，按钮数组
+const pager = computed(() => {
+  const totalPageCount = Math.ceil(toal.value / pageSize.value);
+
+  // 1. 理想情况：
+  const offset = Math.floor(buttonCount / 2);
+  let start = currentPage.value - offset;
+  let end = start + buttonCount - 1;
+  // 2. 如果起始页码 小于1 的情况
+  if (start < 1) {
+    start = 1;
+    end =
+      start + buttonCount - 1 > totalPageCount
+        ? totalPageCount
+        : start + buttonCount - 1;
+  }
+  // 3. 如果结束页码大于总页数
+  if (end > totalPageCount) {
+    end = totalPageCount;
+    start = end - buttonCount + 1 < 1 ? 1 : end - buttonCount + 1;
+  }
+
+  // 求出按钮数组
+  const buttonArr: number[] = [];
+  for (let i = start; i <= end; i++) buttonArr.push(i);
+  return { start, end, buttonArr, totalPageCount };
+});
+
+// 上一页
+const previousPage = () => {
+  if (currentPage.value <= 1) return;
+  currentPage.value--;
+};
+const nextPage = () => {
+  if (currentPage.value >= pager.value.totalPageCount) return;
+  currentPage.value++;
+};
+</script>
+
+<template>
+  <div class="xgh-pagination">
+    <a
+      :class="{ disabled: currentPage <= 1 }"
+      @click="previousPage"
+      href="javascript:;"
+      >上一页</a
+    >
+    <span v-if="pager.start > 1">...</span>
+    <a
+      v-for="item in pager.buttonArr"
+      :class="{ active: item === currentPage }"
+      :key="item"
+      href="javascript:;"
+    >
+      {{ item }}
+    </a>
+    <span v-if="pager.end < pager.totalPageCount">...</span>
+    <a
+      @click="nextPage"
+      :class="{ disabled: currentPage >= pager.totalPageCount }"
+      href="javascript:;"
+    >
+      下一页
+    </a>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.xgh-pagination {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  > a {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #e4e4e4;
+    border-radius: 4px;
+    margin-right: 10px;
+    &:hover {
+      color: $xghColor;
+    }
+    &.active {
+      background: $xghColor;
+      color: #fff;
+      border-color: $xghColor;
+    }
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+  > span {
+    margin-right: 10px;
+  }
+}
+</style>

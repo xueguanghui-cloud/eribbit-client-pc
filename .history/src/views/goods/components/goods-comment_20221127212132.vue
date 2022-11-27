@@ -196,8 +196,8 @@ watch(
     <xgh-pagination
       v-if="total"
       :total="total"
-      :pageSize="requestParams.pageSize"
       v-model:currentPage="requestParams.page"
+      :pageSize="requestParams.pageSize"
     ></xgh-pagination>
   </div>
 </template>

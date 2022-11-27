@@ -81,7 +81,6 @@ const requestParams = reactive<IRequestParams>({
 });
 
 // 初始化需要发送请求，筛选条件发生改变时发送请求，获取评价列表
-const total = ref(0);
 const commentList = ref<ICommentList[]>([]);
 watch(
   requestParams,
@@ -89,7 +88,6 @@ watch(
     // 页码重置为1
     findCommentListByGoods(route.params.id as string, requestParams).then(
       (res: any) => {
-        total.value = res.result.counts;
         commentList.value = res.result.items;
       }
     );
@@ -177,11 +175,8 @@ watch(
           </div>
           <div class="text">
             {{ comment.content }}
+            <goodsCommentImage></goodsCommentImage>
           </div>
-          <goodsCommentImage
-            v-if="comment.pictures.length"
-            :pictures="comment.pictures"
-          ></goodsCommentImage>
           <div class="time">
             <span>{{ comment.createTime }}</span>
             <span class="zan"
@@ -192,13 +187,6 @@ watch(
         </div>
       </div>
     </div>
-    <!-- 分页器 -->
-    <xgh-pagination
-      v-if="total"
-      :total="total"
-      :pageSize="requestParams.pageSize"
-      v-model:currentPage="requestParams.page"
-    ></xgh-pagination>
   </div>
 </template>
 

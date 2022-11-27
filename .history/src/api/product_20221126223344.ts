@@ -47,7 +47,7 @@ export const findCommentInfoByGoods = (id: string) => {
  * @param {Object} params - 参数列表
  */
 export const findCommentListByGoods = (id: string, params: IRequestParams) => {
-  // return get(`/goods/${id}/evaluate/page`);
+  // return get(`/goods/${id}/evaluate`);
   return get(
     `https://mock.boxuegu.com/mock/1175/goods/${id}/evaluate/page`,
     params

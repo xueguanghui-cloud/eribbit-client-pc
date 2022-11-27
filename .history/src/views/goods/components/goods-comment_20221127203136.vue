@@ -192,12 +192,10 @@ watch(
         </div>
       </div>
     </div>
-    <!-- 分页器 -->
     <xgh-pagination
-      v-if="total"
       :total="total"
+      v-model="requestParams.page"
       :pageSize="requestParams.pageSize"
-      v-model:currentPage="requestParams.page"
     ></xgh-pagination>
   </div>
 </template>

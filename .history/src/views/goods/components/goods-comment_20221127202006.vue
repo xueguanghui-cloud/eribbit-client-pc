@@ -82,6 +82,8 @@ const requestParams = reactive<IRequestParams>({
 
 // 初始化需要发送请求，筛选条件发生改变时发送请求，获取评价列表
 const total = ref(0);
+const pageSize = ref(10);
+const currentPage = ref(1);
 const commentList = ref<ICommentList[]>([]);
 watch(
   requestParams,
@@ -192,12 +194,10 @@ watch(
         </div>
       </div>
     </div>
-    <!-- 分页器 -->
     <xgh-pagination
-      v-if="total"
       :total="total"
-      :pageSize="requestParams.pageSize"
-      v-model:currentPage="requestParams.page"
+      :pageSize="10"
+      :currentPage="currentPage"
     ></xgh-pagination>
   </div>
 </template>

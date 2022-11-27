@@ -89,7 +89,6 @@ watch(
     // 页码重置为1
     findCommentListByGoods(route.params.id as string, requestParams).then(
       (res: any) => {
-        total.value = res.result.counts;
         commentList.value = res.result.items;
       }
     );
@@ -192,13 +191,7 @@ watch(
         </div>
       </div>
     </div>
-    <!-- 分页器 -->
-    <xgh-pagination
-      v-if="total"
-      :total="total"
-      :pageSize="requestParams.pageSize"
-      v-model:currentPage="requestParams.page"
-    ></xgh-pagination>
+    <xgh-pagination :total=""></xgh-pagination>
   </div>
 </template>
 
