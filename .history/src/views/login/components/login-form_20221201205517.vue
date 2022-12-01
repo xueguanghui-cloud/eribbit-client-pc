@@ -1,9 +1,9 @@
 <script setup lang="ts">
+setup(){}
 import { reactive, ref, watch } from "vue";
 import { Form, Field } from "vee-validate";
 import schema from "@/utils/vee-validate-schema";
 import Message from "@/baseUI/Message";
-
 const formRef = ref();
 // 是否短信登录
 const isMsgLogin = ref(false);
@@ -52,7 +52,6 @@ const login = async () => {
     type: "error",
     message: "用户名或密码错误",
   });
-
   formRef.value.validate().then((result: any) => {
     console.log(result);
   });

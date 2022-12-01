@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from "vue";
+import { getCurrentInstance, reactive, ref, watch } from "vue";
 import { Form, Field } from "vee-validate";
 import schema from "@/utils/vee-validate-schema";
 import Message from "@/baseUI/Message";
@@ -45,14 +45,20 @@ watch(isMsgLogin, () => {
   formRef.value.resetForm();
 });
 
+const { proxy } = getCurrentInstance();
+
 // 需要在登录时对整体表单校验
 // vee-validate 提供了与一个 validate 函数作为整体表单校验，返回的是一个promise
 const login = async () => {
-  Message({
+  /* Message({
+    type: "error",
+    message: "用户名或密码错误",
+  }); */
+
+  proxy.$message({
     type: "error",
     message: "用户名或密码错误",
   });
-
   formRef.value.validate().then((result: any) => {
     console.log(result);
   });

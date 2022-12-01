@@ -5,7 +5,6 @@
 // vue3.0插件写法要素：导出一个对象，有install函数，默认传入了app应用实例,app基础之上扩展
 import type { App } from "vue";
 import defaultImg from "@/assets/image/200.png";
-import Message from "./Message";
 /*
     import XghSkeleton from "./xgh-skeleton.vue";
     import XghCarousel from "./xgh-carousel.vue";
@@ -43,8 +42,6 @@ export default {
     }
     // 定义指令
     defineDirective(app);
-    // 定义原型函数
-    app.config.globalProperties.$message = Message;
   },
 };
 

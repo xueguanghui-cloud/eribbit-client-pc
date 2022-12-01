@@ -2,6 +2,9 @@
 import { RouterView } from "vue-router";
 </script>
 
-<template><RouterView /></template>
+<template>
+  <RouterView />
+  <xgh-message type="success"></xgh-message>
+</template>
 
 <style scoped lang="scss"></style>

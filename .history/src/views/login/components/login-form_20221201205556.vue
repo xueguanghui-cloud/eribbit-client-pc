@@ -52,7 +52,6 @@ const login = async () => {
     type: "error",
     message: "用户名或密码错误",
   });
-
   formRef.value.validate().then((result: any) => {
     console.log(result);
   });
