@@ -67,7 +67,7 @@ const { pause, resume } = useIntervalFn(
   { immediate: false }
 );
 
-/*
+/* 
  发送验证码
   - 绑定发送验证码按钮点击事件
   - 校验手机号，成功：发送短信（定义API）开启60s倒计时，不能再次点击，知道倒计时结束恢复；失败：校验失败样式提示
@@ -91,35 +91,45 @@ const sendVerificationCode = async () => {
 const login = async () => {
   const valid = await formRef.value.validate();
   let data;
-  try {
-    if (valid) {
-      if (isMsgLogin.value) {
-        // 手机号登录
-        // 1. 发送验证码
-        // 2. 手机号登录
-        // 3. 准备API做手机号登录
-        // 4. 调用API函数
-        // 5. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
-        const { mobile, code } = form;
-        data = await userMobileLogin(mobile, code);
-      } else {
-        const { account, password } = form;
-        data = await userAccountLogin(account, password);
-      }
-      const { id, account, avatar, mobile, nickname, token } = data.result;
-      userStore.setUser({ id, account, avatar, mobile, nickname, token });
-      router.push((route.query.redirectUrl as string) || "/");
-      Message({
-        type: "success",
-        message: "登录成功",
-      });
+  if (valid) {
+    if (isMsgLogin.value) {
+      // 手机号登录
+      // 1. 发送验证码
+      // 2. 手机号登录
+      // 3. 准备API做手机号登录
+      // 4. 调用API函数
+      // 5. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
+      const { mobile, code } = form;
+      data = await userMobileLogin(mobile, code);
+    } else {
     }
-  } catch (err: any) {
-    err.response.data &&
-      Message({
-        type: "error",
-        message: err.response.data.message,
-      });
+  }
+  if (isMsgLogin.value) {
+  } else {
+    // 账号登录
+    // 1. 准备API做账号登录
+    // 2. 调用API函数
+    // 3. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
+    if (valid) {
+      const { account, password } = form;
+      userAccountLogin(account, password)
+        .then((res: any) => {
+          const { id, account, avatar, mobile, nickname, token } = res.result;
+          userStore.setUser({ id, account, avatar, mobile, nickname, token });
+          router.push((route.query.redirectUrl as string) || "/");
+          Message({
+            type: "success",
+            message: "登录成功",
+          });
+        })
+        .catch((err: any) => {
+          err.response.data &&
+            Message({
+              type: "error",
+              message: err.response.data.message,
+            });
+        });
+    }
   }
 };
 

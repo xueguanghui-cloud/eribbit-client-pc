@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-withDefaults(defineProps<{ type: string; message: string }>(), {
+=withDefaults(defineProps<{ type: string; message: string }>(), {
   type: "warn",
   message: "message",
 });

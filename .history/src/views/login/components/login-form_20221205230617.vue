@@ -91,36 +91,56 @@ const sendVerificationCode = async () => {
 const login = async () => {
   const valid = await formRef.value.validate();
   let data;
-  try {
+  try{
     if (valid) {
-      if (isMsgLogin.value) {
-        // 手机号登录
-        // 1. 发送验证码
-        // 2. 手机号登录
-        // 3. 准备API做手机号登录
-        // 4. 调用API函数
-        // 5. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
-        const { mobile, code } = form;
-        data = await userMobileLogin(mobile, code);
-      } else {
-        const { account, password } = form;
-        data = await userAccountLogin(account, password);
-      }
-      const { id, account, avatar, mobile, nickname, token } = data.result;
-      userStore.setUser({ id, account, avatar, mobile, nickname, token });
-      router.push((route.query.redirectUrl as string) || "/");
-      Message({
-        type: "success",
-        message: "登录成功",
-      });
+    if (isMsgLogin.value) {
+      // 手机号登录
+      // 1. 发送验证码
+      // 2. 手机号登录
+      // 3. 准备API做手机号登录
+      // 4. 调用API函数
+      // 5. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
+      const { mobile, code } = form;
+      data = await userMobileLogin(mobile, code);
+    } else {
+      const { account, password } = form;
+      data = await userAccountLogin(account, password);
     }
-  } catch (err: any) {
-    err.response.data &&
-      Message({
-        type: "error",
-        message: err.response.data.message,
-      });
+    const { id, account, avatar, mobile, nickname, token } = res.result;
+    userStore.setUser({ id, account, avatar, mobile, nickname, token });
+    router.push((route.query.redirectUrl as string) || "/");
+    Message({
+      type: "success",
+      message: "登录成功",
+    });
   }
+  }
+  catch(err: any){
+    err.response.data &&
+            Message({
+              type: "error",
+              message: err.response.data.message,
+            });
+  }
+
+  data.
+  /* userAccountLogin(account, password)
+        .then((res: any) => {
+          const { id, account, avatar, mobile, nickname, token } = res.result;
+          userStore.setUser({ id, account, avatar, mobile, nickname, token });
+          router.push((route.query.redirectUrl as string) || "/");
+          Message({
+            type: "success",
+            message: "登录成功",
+          });
+        })
+        .catch((err: any) => {
+          err.response.data &&
+            Message({
+              type: "error",
+              message: err.response.data.message,
+            });
+        }); */
 };
 
 onUnmounted(() => {

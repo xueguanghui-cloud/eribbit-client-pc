@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import { onUnmounted, reactive, ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Form, Field } from "vee-validate";
 import Message from "@/baseUI/Message";
 import { useUserStore } from "@/stores/user";
 import schema from "@/utils/vee-validate-schema";
-import {
-  userAccountLogin,
-  userVerificationCodeByMobile,
-  userMobileLogin,
-} from "@/api/user";
-import { useIntervalFn } from "@vueuse/shared";
+import { userAccountLogin, userMobileLogin } from "@/api/user";
 
 const formRef = ref();
 const route = useRoute();
@@ -55,77 +50,58 @@ watch(isMsgLogin, () => {
   // 补充校验效果清除，Form组件提供resetForm()
   formRef.value.resetForm();
 });
-// pause: 暂停，resume:开启
-// useIntervalFn(callback, interval, 是否立即开启)
-const time = ref(0);
-const { pause, resume } = useIntervalFn(
-  () => {
-    time.value--;
-    if (time.value <= 0) pause();
-  },
-  1000,
-  { immediate: false }
-);
 
-/*
- 发送验证码
-  - 绑定发送验证码按钮点击事件
-  - 校验手机号，成功：发送短信（定义API）开启60s倒计时，不能再次点击，知道倒计时结束恢复；失败：校验失败样式提示
-*/
-const sendVerificationCode = async () => {
+// 发送验证码
+/* const sendVerificationMessage = () => {
   const valid = internalSchema.mobile(form.mobile);
   if (valid === true) {
-    await userVerificationCodeByMobile(form.mobile);
-    if (time.value === 0) {
-      time.value = 60;
-      resume();
-    }
+    console.log();
   } else {
     // 失败，使用vee的错误函数显示错误信息 setFieldError(字段, 错误信息)
     formRef.value.setFieldError("mobile", valid);
   }
-};
+}; */
 
 // 需要在登录时对整体表单校验
 // vee-validate 提供了与一个 validate 函数作为整体表单校验，返回的是一个promise
-const login = async () => {
+const login = () => {
   const valid = await formRef.value.validate();
-  let data;
-  try {
+  if (isMsgLogin.value) {
+    // 手机号登录
+    // 1. 发送验证码
+    //    - 绑定发送验证码按钮点击事件
+    //    - 校验手机号，成功：发送短信（定义API）开启60s倒计时，不能再次点击，知道倒计时结束恢复；失败：校验失败样式提示
+    // 2. 手机号登录
+    // 3. 准备API做手机号登录
+    // 4. 调用API函数
+    // 5. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
+  } else {
+    // 账号登录
+    // 1. 准备API做账号登录
+    // 2. 调用API函数
+    // 3. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
     if (valid) {
-      if (isMsgLogin.value) {
-        // 手机号登录
-        // 1. 发送验证码
-        // 2. 手机号登录
-        // 3. 准备API做手机号登录
-        // 4. 调用API函数
-        // 5. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
-        const { mobile, code } = form;
-        data = await userMobileLogin(mobile, code);
-      } else {
-        const { account, password } = form;
-        data = await userAccountLogin(account, password);
-      }
-      const { id, account, avatar, mobile, nickname, token } = data.result;
-      userStore.setUser({ id, account, avatar, mobile, nickname, token });
-      router.push((route.query.redirectUrl as string) || "/");
-      Message({
-        type: "success",
-        message: "登录成功",
-      });
+      const { account, password } = form;
+      userAccountLogin(account, password)
+        .then((res: any) => {
+          const { id, account, avatar, mobile, nickname, token } = res.result;
+          userStore.setUser({ id, account, avatar, mobile, nickname, token });
+          router.push((route.query.redirectUrl as string) || "/");
+          Message({
+            type: "success",
+            message: "登录成功",
+          });
+        })
+        .catch((err: any) => {
+          err.response.data &&
+            Message({
+              type: "error",
+              message: err.response.data.message,
+            });
+        });
     }
-  } catch (err: any) {
-    err.response.data &&
-      Message({
-        type: "error",
-        message: err.response.data.message,
-      });
   }
 };
-
-onUnmounted(() => {
-  pause();
-});
 </script>
 
 <template>
@@ -212,9 +188,9 @@ onUnmounted(() => {
             <div class="error" v-if="errors.code">
               <i class="iconfont icon-warning" />{{ errors.code }}
             </div>
-            <span class="code" @click="sendVerificationCode">
-              {{ time === 0 ? "发送验证码" : time + "秒后发送" }}
-            </span>
+            <span class="code" @click="sendVerificationMessage"
+              >发送验证码</span
+            >
           </div>
         </div>
       </template>
