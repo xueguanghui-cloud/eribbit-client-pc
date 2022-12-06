@@ -11,7 +11,7 @@ import {
   userMobileLogin,
 } from "@/api/user";
 import { useIntervalFn } from "@vueuse/shared";
-// import QC from "qc";
+import QC from "qc";
 
 const formRef = ref();
 const route = useRoute();
@@ -126,9 +126,9 @@ const login = async () => {
 
 // 初始化QQ登录按钮
 onMounted(() => {
-  /* QC.Login({
+  QC.Login({
     btnId: "qqLoginBtn", //插入按钮的节点id
-  }); */
+  });
 });
 
 onUnmounted(() => {
@@ -254,7 +254,7 @@ onUnmounted(() => {
           alt=""
         />
       </a>
-      <!-- <span id="qqLoginBtn"></span> -->
+      <span id="qqLoginBtn"></span>
       <div class="url">
         <a href="javascript:;">忘记密码</a>
         <a href="javascript:;">免费注册</a>

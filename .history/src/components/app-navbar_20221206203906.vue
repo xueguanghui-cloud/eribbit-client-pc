@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
-import { useRouter } from "vue-router";
 // 获取用户的登录信息才能控制切换导航菜单
 const userStore = useUserStore();
-const router = useRouter();
 const { profile } = storeToRefs(userStore);
-/* 
-  退出登录
-    1. 清空本地存储信息和pinia的用户信息
-    2. 跳转登录
-*/
-const logout = () => {
-  userStore.clearUser();
-  router.push("/login");
-};
+
+// 退出登录
+const logout = () => {};
 </script>
 
 <template>
@@ -27,7 +19,7 @@ const logout = () => {
               ><i class="iconfont icon-user"></i>{{ profile.account }}</a
             >
           </li>
-          <li><a href="javascript:;" @click="logout">退出登录</a></li>
+          <li><a href="javascript:;">退出登录</a></li>
         </template>
         <template v-else>
           <li><router-link to="/login">请先登录</router-link></li>

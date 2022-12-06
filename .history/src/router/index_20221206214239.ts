@@ -6,7 +6,7 @@ const Category = () => import("@/views/category/category.vue");
 const subCategory = () => import("@/views/category/sub.vue");
 const Goods = () => import("@/views/goods/goods.vue");
 const Login = () => import("@/views/login/login.vue");
-const Callback = () => import("@/views/login/callback.vue");
+const CallBack =() => import("@/views/login/callback.vue")
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,11 +22,9 @@ const router = createRouter({
         { path: "/product/:id", component: Goods },
       ],
     },
-    {
-      path: "/login",
-      component: Login,
-    },
-    { path: "/login/callback", component: Callback },
+    { path: "/login", component: Login, children: [
+      {path: "/login/callback", component: Login, children:}
+    ] },
   ],
   // 路由跳转时，页面回到顶部
   scrollBehavior() {

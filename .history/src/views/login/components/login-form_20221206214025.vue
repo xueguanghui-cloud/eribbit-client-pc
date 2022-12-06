@@ -11,7 +11,7 @@ import {
   userMobileLogin,
 } from "@/api/user";
 import { useIntervalFn } from "@vueuse/shared";
-// import QC from "qc";
+import QC from "qc";
 
 const formRef = ref();
 const route = useRoute();
@@ -129,7 +129,7 @@ onMounted(() => {
   /* QC.Login({
     btnId: "qqLoginBtn", //插入按钮的节点id
   }); */
-});
+// });
 
 onUnmounted(() => {
   pause();

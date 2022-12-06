@@ -13,7 +13,6 @@ const { profile } = storeToRefs(userStore);
 */
 const logout = () => {
   userStore.clearUser();
-  router.push("/login");
 };
 </script>
 

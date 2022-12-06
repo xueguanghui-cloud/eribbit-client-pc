@@ -6,11 +6,7 @@ import resolveExternalsPlugin from "vite-plugin-resolve-externals";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    // 配置外部扩展，在打包时忽略 qc 包
-    resolveExternalsPlugin({ qc: "QC" }),
-  ],
+  plugins: [vue(), resolveExternalsPlugin({})],
   css: {
     preprocessorOptions: {
       // 全局样式引入

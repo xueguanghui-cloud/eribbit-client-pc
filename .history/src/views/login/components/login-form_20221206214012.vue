@@ -11,7 +11,7 @@ import {
   userMobileLogin,
 } from "@/api/user";
 import { useIntervalFn } from "@vueuse/shared";
-// import QC from "qc";
+import QC from "qc";
 
 const formRef = ref();
 const route = useRoute();

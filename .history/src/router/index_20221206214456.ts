@@ -26,7 +26,6 @@ const router = createRouter({
       path: "/login",
       component: Login,
     },
-    { path: "/login/callback", component: Callback },
   ],
   // 路由跳转时，页面回到顶部
   scrollBehavior() {

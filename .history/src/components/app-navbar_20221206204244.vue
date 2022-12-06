@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
-import { useRouter } from "vue-router";
 // 获取用户的登录信息才能控制切换导航菜单
 const userStore = useUserStore();
-const router = useRouter();
 const { profile } = storeToRefs(userStore);
 /* 
   退出登录
@@ -13,7 +11,6 @@ const { profile } = storeToRefs(userStore);
 */
 const logout = () => {
   userStore.clearUser();
-  router.push("/login");
 };
 </script>
 
