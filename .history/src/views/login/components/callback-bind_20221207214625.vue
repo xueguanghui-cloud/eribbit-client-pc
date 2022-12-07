@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<{ unionId: string }>(), { unionId: "" });
 
 const userStore = useUserStore();
 const router = useRouter();
+const isMsgLogin = ref(false);
 const nickName = ref("");
 const avatar = ref("");
 const formRef = ref();
@@ -69,7 +70,7 @@ const sendVerificationCode = async () => {
   }
 };
 
-// 需要在绑定时对整体表单校验
+// 需要在登录时对整体表单校验
 // vee-validate 提供了与一个 validate 函数作为整体表单校验，返回的是一个promise
 const bind = async () => {
   const valid = await formRef.value.validate();
@@ -83,7 +84,7 @@ const bind = async () => {
       router.push(userStore.redirectUrl);
       Message({
         type: "success",
-        message: "QQ绑定成功",
+        message: "登录成功",
       });
     }
   } catch (err: any) {

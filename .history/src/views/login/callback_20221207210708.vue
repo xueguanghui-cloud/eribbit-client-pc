@@ -78,11 +78,11 @@ if (QC.Login.check()) {
         <span>没有小兔鲜账号，请完善资料</span>
       </a>
     </nav>
-    <div class="tab-content" v-if="hasAccount">
-      <callbackBind :unionId="unionId" />
+    <div class="tab-content" :unionId="unionId" v-if="hasAccount">
+      <callbackBind />
     </div>
-    <div class="tab-content" v-else>
-      <callbackPatch :unionId="unionId" />
+    <div class="tab-content" :unionId="unionId" v-else>
+      <callbackPatch />
     </div>
   </section>
 

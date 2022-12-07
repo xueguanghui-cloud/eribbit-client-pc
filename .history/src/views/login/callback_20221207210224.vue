@@ -18,7 +18,6 @@ const hasAccount = ref(true);
 // 通过 QQ 的API获取openId就是后台需要的unionId, 然后去进行登录
 // 成功：登录成功；失败：该QQ账号未和小兔仙进行绑定（有账号未绑定QQ，没有账号未绑定QQ）
 const isBind = ref(true);
-const unionId = ref("");
 
 // 确保QQ已经登录
 console.log("sss", QC.Login.check());
@@ -26,7 +25,8 @@ console.log("sss", QC.Login.check());
 if (QC.Login.check()) {
   QC.Login.getMe((openId: string) => {
     // 第三方唯一标识
-    unionId.value = openId;
+    console.log(openId);
+
     userQQLogin(openId)
       .then((res: any) => {
         // 登录成功：data.result 用户信息
@@ -79,10 +79,10 @@ if (QC.Login.check()) {
       </a>
     </nav>
     <div class="tab-content" v-if="hasAccount">
-      <callbackBind :unionId="unionId" />
+      <callbackBind />
     </div>
     <div class="tab-content" v-else>
-      <callbackPatch :unionId="unionId" />
+      <callbackPatch />
     </div>
   </section>
 

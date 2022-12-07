@@ -9,7 +9,7 @@ const userStore = useUserStore();
 const route = useRoute();
 const activeName = ref("account");
 // 存储回跳地址
-userStore.redirectUrl = (route.query.redirectUrl as string) || "/";
+userStore.redirectUrl = route.query.redirectUrl as string;
 </script>
 
 <template>

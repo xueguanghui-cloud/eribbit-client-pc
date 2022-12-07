@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<{ unionId: string }>(), { unionId: "" });
 
 const userStore = useUserStore();
 const router = useRouter();
+const isMsgLogin = ref(false);
 const nickName = ref("");
 const avatar = ref("");
 const formRef = ref();

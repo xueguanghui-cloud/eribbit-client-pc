@@ -79,10 +79,10 @@ if (QC.Login.check()) {
       </a>
     </nav>
     <div class="tab-content" v-if="hasAccount">
-      <callbackBind :unionId="unionId" />
+      <callbackBind />
     </div>
     <div class="tab-content" v-else>
-      <callbackPatch :unionId="unionId" />
+      <callbackPatch />
     </div>
   </section>
 

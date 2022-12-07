@@ -3,19 +3,14 @@ import QC from "qc";
 import { onMounted, reactive, ref } from "vue";
 import { Form, Field } from "vee-validate";
 import schema from "@/utils/vee-validate-schema";
-import { userQQBindCode, userQQBindLogin } from "@/api/user";
+import { userQQBindCode } from "@/api/user";
 import Message from "@/baseUI/Message";
-import { useIntervalFn } from "@vueuse/core";
-import { useUserStore } from "@/stores/user";
-import { useRouter } from "vue-router";
 // 1. unionId(openId), qq头像，昵称
 // 2. 完成表单校验
 // 3. 发送验证码(校验,定义api, 调用,完成倒计时)
 // 4. 进行绑定(绑定成功就是登录成功)
-const props = withDefaults(defineProps<{ unionId: string }>(), { unionId: "" });
+withDefaults(defineProps<{ unionId: string }>(), { unionId: "" });
 
-const userStore = useUserStore();
-const router = useRouter();
 const nickName = ref("");
 const avatar = ref("");
 const formRef = ref();
@@ -38,6 +33,15 @@ const internalSchema = {
   code: schema.code,
 };
 
+// 监听isMsgLogin重置表单
+watch(isMsgLogin, () => {
+  form.account = "";
+  form.password = "";
+  form.mobile = "";
+  form.code = "";
+  // 补充校验效果清除，Form组件提供resetForm()
+  formRef.value.resetForm();
+});
 // pause: 暂停，resume:开启
 // useIntervalFn(callback, interval, 是否立即开启)
 const time = ref(0);
@@ -58,7 +62,7 @@ const { pause, resume } = useIntervalFn(
 const sendVerificationCode = async () => {
   const valid = internalSchema.mobile(form.mobile);
   if (valid === true) {
-    await userQQBindCode(form.mobile);
+    await userVerificationCodeByMobile(form.mobile);
     if (time.value === 0) {
       time.value = 60;
       resume();
@@ -69,21 +73,32 @@ const sendVerificationCode = async () => {
   }
 };
 
-// 需要在绑定时对整体表单校验
+// 需要在登录时对整体表单校验
 // vee-validate 提供了与一个 validate 函数作为整体表单校验，返回的是一个promise
-const bind = async () => {
+const login = async () => {
   const valid = await formRef.value.validate();
   let data;
   try {
     if (valid) {
-      data = await userQQBindLogin(props.unionId, form.mobile, form.code);
-
+      if (isMsgLogin.value) {
+        // 手机号登录
+        // 1. 发送验证码
+        // 2. 手机号登录
+        // 3. 准备API做手机号登录
+        // 4. 调用API函数
+        // 5. 成功：跳转至首页/来源页 + 登录成功的提示；失败：登录失败的提示
+        const { mobile, code } = form;
+        data = await userMobileLogin(mobile, code);
+      } else {
+        const { account, password } = form;
+        data = await userAccountLogin(account, password);
+      }
       const { id, account, avatar, mobile, nickname, token } = data.result;
       userStore.setUser({ id, account, avatar, mobile, nickname, token });
-      router.push(userStore.redirectUrl);
+      router.push((route.query.redirectUrl as string) || "/");
       Message({
         type: "success",
-        message: "QQ绑定成功",
+        message: "登录成功",
       });
     }
   } catch (err: any) {
@@ -94,6 +109,13 @@ const bind = async () => {
       });
   }
 };
+
+// 初始化QQ登录按钮
+onMounted(() => {
+  /* QC.Login({
+    btnId: "qqLoginBtn", //插入按钮的节点id
+  }); */
+});
 
 onMounted(() => {
   pause();
@@ -118,7 +140,6 @@ onMounted(() => {
         <Field
           name="mobile"
           class="input"
-          v-model="form.mobile"
           :class="{ err: errors.mobile }"
           type="text"
           placeholder="绑定的手机号"
@@ -134,16 +155,13 @@ onMounted(() => {
           :class="{ err: errors.code }"
           class="input"
           type="text"
-          v-model="form.code"
           placeholder="短信验证码"
         />
-        <span class="code" @click="sendVerificationCode">
-          {{ time === 0 ? "发送验证码" : time + "秒后发送" }}
-        </span>
+        <span class="code">发送验证码</span>
       </div>
       <div class="error" v-if="errors.code">{{ errors.code }}</div>
     </div>
-    <a href="javascript:;" class="submit" @click="bind">立即绑定</a>
+    <a href="javascript:;" class="submit">立即绑定</a>
   </Form>
 </template>
 

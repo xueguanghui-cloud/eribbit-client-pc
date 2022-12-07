@@ -42,7 +42,7 @@ export const userQQLogin = (unionId: string, source = 1) => {
 };
 
 /**
- * 获取QQ绑定的时候短信验证码
+ * 绑定手机号
  * @param mobile 手机号
  * @returns Promise
  */
@@ -50,13 +50,6 @@ export const userQQBindCode = (mobile: string) => {
   return get("/login/social/code", { mobile });
 };
 
-/**
- * QQ 登录-绑定账号
- * @param unionId QQ 唯一标识 openId
- * @param mobile 手机号
- * @param code 验证码
- * @returns Promise
- */
 export const userQQBindLogin = (
   unionId: string,
   mobile: string,
